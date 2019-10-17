@@ -18,11 +18,11 @@ env:
 
 The Slack notification leverages attachments to group important information together and provide valuable links:
 
-![Screenshot of the push event](./docs/push.png)
+<img src="docs/push.png" alt="Screenshot of the push event" width="540">
 
 When used with the `pull_request` event, a link to the originating pull request is included:
 
-![Screenshot of the pull_request event](./docs/pr.png)
+<img src="docs/pr.png" alt="Screenshot of the pull_request event" width="540">
 
 ## Inputs
 
