@@ -7,7 +7,7 @@ A [Slack bot token](https://api.slack.com/docs/token-types) is required to use t
 ## Usage
 
 ```yaml
-uses: actions/github-action-slack-notify-build@master
+uses: voxmedia/github-action-slack-notify-build@master
 with:
   channel: app-alerts
   status: STARTED
@@ -15,6 +15,14 @@ with:
 env:
   SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 ```
+
+The Slack notification leverages attachments to group important information together and provide valuable links:
+
+![Screenshot of the push event](./docs/push.png)
+
+When used with the `pull_request` event, a link to the originating pull request is included:
+
+![Screenshot of the pull_request event](./docs/pr.png)
 
 ## Inputs
 
