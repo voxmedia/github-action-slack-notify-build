@@ -13,24 +13,16 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: "12.x"
-    - name: Notify slack
-      env:
-        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-      uses: ./
-      with:
-        channel: '@josh.larson'
-        status: STARTED
-        color: warning
+    # - name: Notify slack
+    #   env:
+    #     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+    #   uses: ./
+    #   with:
+    #     channel: 'rp-notifications'
+    #     status: STARTED
+    #     color: warning
     - name: yarn install
       run: |
         yarn
       env:
         CI: true
-    - name: Notify slack success
-      env:
-        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-      uses: ./
-      with:
-        channel: '@josh.larson'
-        status: SUCCESS
-        color: good
