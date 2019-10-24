@@ -12,7 +12,6 @@ const { WebClient } = require("@slack/web-api");
     const slack = new WebClient(token);
 
     const attachments = buildSlackAttachments({ status, color, github });
-    const apiMethod = Boolean(messageId) ? "update" : "postMessage";
     const channelId = await lookUpChannelId({ slack, channel });
 
     if (!channelId) {
@@ -20,10 +19,18 @@ const { WebClient } = require("@slack/web-api");
       return;
     }
 
-    const response = await slack.chat[apiMethod]({
+    const apiMethod = Boolean(messageId) ? "update" : "postMessage";
+
+    const args = {
       channel: channelId,
-      attachments
-    });
+      attachments,
+    };
+
+    if (messageId) {
+      args.ts = messageId;
+    }
+
+    const response = await slack.chat[apiMethod](args);
 
     core.setOutput("message_id", response.ts);
   } catch (error) {
