@@ -10,7 +10,7 @@ try {
 
   const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN;
   const slackPayload = buildSlackPayload({ channel, status, color, github, messageId });
-  const chatApiMethod = Boolean(messageId) ? 'postMessage' : 'update';
+  const chatApiMethod = Boolean(messageId) ? 'update' : 'postMessage';
 
   fetch(`https://slack.com/api/chat.${chatApiMethod}`, {
     method: 'post',
