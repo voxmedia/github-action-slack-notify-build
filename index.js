@@ -7,6 +7,7 @@ try {
   const status = core.getInput('status');
   const color = core.getInput('color');
   console.log('message id?', core.getInput('message_id'));
+  console.log(JSON.stringify(github.context));
 
   const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN;
   const slackPayload = buildSlackPayload({ channel, status, color, github });
