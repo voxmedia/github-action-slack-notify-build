@@ -4,35 +4,35 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Use Node.js v12.x
-      uses: actions/setup-node@v1
-      with:
-        node-version: 12
-    - name: Notify slack
-      id: slack
-      env:
-        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-      uses: ./
-      with:
-        channel: 'rp-notifications'
-        status: STARTED
-        color: warning
-    - name: yarn install
-      run: |
-        yarn
-      env:
-        CI: true
-    - name: Notify slack success
-      env:
-        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-      uses: ./
-      with:
-        message_id: ${{ steps.slack.outputs.message_id }}
-        channel: 'rp-notifications'
-        status: SUCCESS
-        color: good
+      - uses: actions/checkout@v1
+      - name: Use Node.js v12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Notify slack
+        id: slack
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: ./
+        with:
+          channel: 'rp-notifications'
+          status: STARTED
+          color: warning
+      - name: yarn install and test
+        run: |
+          yarn
+          yarn test
+        env:
+          CI: true
+      - name: Notify slack success
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: ./
+        with:
+          message_id: ${{ steps.slack.outputs.message_id }}
+          channel: 'rp-notifications'
+          status: SUCCESS
+          color: good
