@@ -32,7 +32,7 @@ jobs:
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
       uses: ./
       with:
-        message_id: {{ steps.slack.outputs.message_id }}
+        message_id: ${{ steps.slack.outputs.message_id }}
         channel: '@josh.larson'
         status: SUCCESS
         color: good
