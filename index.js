@@ -15,6 +15,8 @@ const { WebClient } = require("@slack/web-api");
     const apiMethod = Boolean(messageId) ? "update" : "postMessage";
     const channelId = await lookUpChannelId({ slack, channel });
 
+    console.log(channelId);
+
     if (!channelId) {
       core.setFailed(`Slack channel ${channel} could not be found.`);
       return;
