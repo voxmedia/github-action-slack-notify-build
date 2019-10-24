@@ -6,12 +6,13 @@ try {
   const channel = core.getInput('channel');
   const status = core.getInput('status');
   const color = core.getInput('color');
-  console.log('message id?', core.getInput('message_id'));
+  const messageId = core.getInput('message_id');
 
   const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN;
-  const slackPayload = buildSlackPayload({ channel, status, color, github });
+  const slackPayload = buildSlackPayload({ channel, status, color, github, messageId });
+  const chatApiMethod = Boolean(messageId) ? 'postMessage' : 'update';
 
-  fetch('https://slack.com/api/chat.postMessage', {
+  fetch(`https://slack.com/api/chat.${chatApiMethod}`, {
     method: 'post',
     headers: {
       'Content-Type': 'application/json',
@@ -27,7 +28,7 @@ try {
   core.setFailed(error.message);
 }
 
-function buildSlackPayload({ channel, status, color, github }) {
+function buildSlackPayload({ channel, status, color, github, messageId }) {
   const { payload, ref, workflow, eventName } = github.context;
   const owner = payload.repository.owner.login;
   const name = payload.repository.name;
@@ -55,7 +56,7 @@ function buildSlackPayload({ channel, status, color, github }) {
           short: true,
         };
 
-  return {
+  const slackPayload = {
     channel,
     attachments: [
       {
@@ -81,4 +82,10 @@ function buildSlackPayload({ channel, status, color, github }) {
       },
     ],
   };
+
+  if (messageId) {
+    slackPayload.ts = messageId;
+  }
+
+  return slackPayload;
 }
