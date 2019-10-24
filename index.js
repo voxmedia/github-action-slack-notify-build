@@ -6,6 +6,7 @@ try {
   const channel = core.getInput('channel');
   const status = core.getInput('status');
   const color = core.getInput('color');
+  console.log('message id?', core.getInput('message_id'));
 
   const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN;
   const slackPayload = buildSlackPayload({ channel, status, color, github });
@@ -17,7 +18,10 @@ try {
       Authorization: `Bearer ${SLACK_BOT_TOKEN}`,
     },
     body: JSON.stringify(slackPayload),
-  });
+  }).then(response => response.json().then(data => {
+    console.log(JSON.stringify(data));
+    core.setOutput('message_id', '1234');
+  }));
 } catch (error) {
   core.setFailed(error.message);
 }

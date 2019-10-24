@@ -11,6 +11,9 @@ inputs:
     description: "Color"
     required: true
     default: "#cccccc"
+outputs:
+  message_id:
+    description: "The unique timestamp identifier of the Slack message sent"
 runs:
   using: "node12"
   main: "dist/index.js"
