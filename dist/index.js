@@ -887,6 +887,7 @@ function serial(list, iterator, callback)
 const core = __webpack_require__(470);
 const github = __webpack_require__(469);
 const { WebClient } = __webpack_require__(114);
+const { buildSlackAttachments } = __webpack_require__(543);
 
 (async () => {
   try {
@@ -928,59 +929,6 @@ const { WebClient } = __webpack_require__(114);
     core.setFailed(error.message);
   }
 })();
-
-function buildSlackAttachments({ status, color, github }) {
-  const { payload, ref, workflow, eventName } = github.context;
-  const owner = payload.repository.owner.login;
-  const name = payload.repository.name;
-  const event = eventName;
-  const branch =
-    event === "pull_request"
-      ? payload.pull_request.head.ref
-      : ref.replace("refs/heads/", "");
-
-  const sha =
-    event === "pull_request"
-      ? payload.pull_request.head.sha
-      : github.context.sha;
-
-  const referenceLink =
-    event === "pull_request"
-      ? {
-          title: "Pull Request",
-          value: `<${payload.pull_request.html_url} | ${payload.pull_request.title}>`,
-          short: true
-        }
-      : {
-          title: "Branch",
-          value: `<https://github.com/${owner}/${name}/commit/${sha} | ${branch}>`,
-          short: true
-        };
-
-  return [
-    {
-      color,
-      fields: [
-        {
-          title: "Action",
-          value: `<https://github.com/${owner}/${name}/commit/${sha}/checks | ${workflow}>`,
-          short: true
-        },
-        {
-          title: "Status",
-          value: status,
-          short: true
-        },
-        referenceLink,
-        {
-          title: "Event",
-          value: event,
-          short: true
-        }
-      ]
-    }
-  ];
-}
 
 async function lookUpChannelId({ slack, channel }) {
   let result;
@@ -9799,6 +9747,67 @@ function hasFirstPage (link) {
   deprecate(`octokit.hasFirstPage() – You can use octokit.paginate or async iterators instead: https://github.com/octokit/rest.js#pagination.`)
   return getPageLinks(link).first
 }
+
+
+/***/ }),
+
+/***/ 543:
+/***/ (function(module) {
+
+function buildSlackAttachments({ status, color, github }) {
+  const { payload, ref, workflow, eventName } = github.context;
+  const owner = payload.repository.owner.login;
+  const name = payload.repository.name;
+  const event = eventName;
+  const branch =
+    event === "pull_request"
+      ? payload.pull_request.head.ref
+      : ref.replace("refs/heads/", "");
+
+  const sha =
+    event === "pull_request"
+      ? payload.pull_request.head.sha
+      : github.context.sha;
+
+  const referenceLink =
+    event === "pull_request"
+      ? {
+          title: "Pull Request",
+          value: `<${payload.pull_request.html_url} | ${payload.pull_request.title}>`,
+          short: true
+        }
+      : {
+          title: "Branch",
+          value: `<https://github.com/${owner}/${name}/commit/${sha} | ${branch}>`,
+          short: true
+        };
+
+  return [
+    {
+      color,
+      fields: [
+        {
+          title: "Action",
+          value: `<https://github.com/${owner}/${name}/commit/${sha}/checks | ${workflow}>`,
+          short: true
+        },
+        {
+          title: "Status",
+          value: status,
+          short: true
+        },
+        referenceLink,
+        {
+          title: "Event",
+          value: event,
+          short: true
+        }
+      ]
+    }
+  ];
+}
+
+module.exports.buildSlackAttachments = buildSlackAttachments;
 
 
 /***/ }),
