@@ -15,8 +15,6 @@ const { WebClient } = require("@slack/web-api");
     const apiMethod = Boolean(messageId) ? "update" : "postMessage";
     const channelId = await lookUpChannelId({ slack, channel });
 
-    console.log(channelId);
-
     if (!channelId) {
       core.setFailed(`Slack channel ${channel} could not be found.`);
       return;
@@ -95,7 +93,7 @@ async function lookUpChannelId({ slack, channel }) {
     // You can inspect each page, find your result, and stop the loop with a `break` statement
     const match = page.channels.find(c => c.name === channel);
     if (match) {
-      result = match
+      result = match.id
       break;
     }
   }
