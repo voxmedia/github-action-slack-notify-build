@@ -13,9 +13,15 @@ const { WebClient } = require("@slack/web-api");
 
     const attachments = buildSlackAttachments({ status, color, github });
     const apiMethod = Boolean(messageId) ? "update" : "postMessage";
+    const channelId = await lookUpChannelId({ slack, channel });
+
+    if (!channelId) {
+      core.setFailed(`Slack channel ${channel} could not be found.`);
+      return;
+    }
 
     const response = await slack.chat[apiMethod]({
-      channel,
+      channel: channelId,
       attachments
     });
 
@@ -76,4 +82,21 @@ function buildSlackAttachments({ status, color, github }) {
       ]
     }
   ];
+}
+
+async function lookUpChannelId({ slack, channel }) {
+  let result;
+
+  // Async iteration is similar to a simple for loop.
+  // Use only the first two parameters to get an async iterator.
+  for await (const page of slack.paginate('conversations.list')) {
+    // You can inspect each page, find your result, and stop the loop with a `break` statement
+    const match = page.channels.find(c => c.name === channel);
+    if (match) {
+      result = match
+      break;
+    }
+  }
+
+  return result;
 }
