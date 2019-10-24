@@ -11,6 +11,9 @@ inputs:
     description: "Color"
     required: true
     default: "#cccccc"
+  message_id:
+    description: "The ID of the existing Slack message to update"
+    required: false
 outputs:
   message_id:
     description: "The unique timestamp identifier of the Slack message sent"

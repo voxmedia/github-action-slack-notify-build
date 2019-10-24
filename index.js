@@ -19,8 +19,9 @@ try {
     },
     body: JSON.stringify(slackPayload),
   }).then(response => response.json().then(data => {
-    console.log(JSON.stringify(data));
-    core.setOutput('message_id', '1234');
+    if (data.ok) {
+      core.setOutput('message_id', data.ts);
+    }
   }));
 } catch (error) {
   core.setFailed(error.message);
