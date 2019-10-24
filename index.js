@@ -101,7 +101,7 @@ async function lookUpChannelId({ slack, channel }) {
 
   // Async iteration is similar to a simple for loop.
   // Use only the first two parameters to get an async iterator.
-  for await (const page of slack.paginate('conversations.list')) {
+  for await (const page of slack.paginate('conversations.list', { types: 'public_channel, private_channel' })) {
     // You can inspect each page, find your result, and stop the loop with a `break` statement
     const match = page.channels.find(c => c.name === channel);
     if (match) {
