@@ -2,17 +2,20 @@ name: "Slack Notify Build"
 description: "Report GitHub Actions build status on Slack"
 inputs:
   channel:
-    description: "The Slack channel ID or name"
-    required: true
+    description: "The Slack channel name. Required if no `channel_id` provided."
+    required: false
+  channel_id:
+    description: "The Slack channel ID. Required if no `channel` provided."
+    required: false
   status:
-    description: "The status to list in the update"
+    description: "The status to list in the update."
     required: true
   color:
-    description: "Color"
+    description: "The color of the Slack attachment."
     required: true
     default: "#cccccc"
   message_id:
-    description: "The ID of the existing Slack message to update"
+    description: "The ID of the existing Slack message to update."
     required: false
 outputs:
   message_id:
