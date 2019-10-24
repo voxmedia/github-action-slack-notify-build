@@ -6,7 +6,7 @@ To report bugs or to request new features, you may [create a new issue](https://
 
 ## Releasing a New Version
 
-Please use [semantic versioning](https://semver.org) when releasing new versions of the action.
+Please use [semantic versioning](https://semver.org) when releasing new versions of the action, per [GitHub's recommendations](https://help.github.com/en/github/automating-your-workflow-with-github-actions/about-actions#versioning-your-action).
 
 After a new PR has been merged, an engineer should run locally:
 
