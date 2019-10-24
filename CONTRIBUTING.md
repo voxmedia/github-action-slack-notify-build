@@ -6,7 +6,9 @@ To report bugs or to request new features, you may [create a new issue](https://
 
 ## Releasing a New Version
 
-After a new PR has been merged in, an engineer should locally run:
+Please use [semantic versioning](https://semver.org) when releasing new versions of the action.
+
+After a new PR has been merged, an engineer should run locally:
 
 ```bash
 # pull down the latest changes
