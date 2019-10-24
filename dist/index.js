@@ -887,7 +887,7 @@ function serial(list, iterator, callback)
 const core = __webpack_require__(470);
 const github = __webpack_require__(469);
 const { WebClient } = __webpack_require__(114);
-const { buildSlackAttachments } = __webpack_require__(543);
+const { buildSlackAttachments, formatChannelName } = __webpack_require__(543);
 
 (async () => {
   try {
@@ -932,12 +932,13 @@ const { buildSlackAttachments } = __webpack_require__(543);
 
 async function lookUpChannelId({ slack, channel }) {
   let result;
+  const formattedChannel = formatChannelName(channel);
 
   // Async iteration is similar to a simple for loop.
   // Use only the first two parameters to get an async iterator.
   for await (const page of slack.paginate('conversations.list', { types: 'public_channel, private_channel' })) {
     // You can inspect each page, find your result, and stop the loop with a `break` statement
-    const match = page.channels.find(c => c.name === channel);
+    const match = page.channels.find(c => c.name === formattedChannel);
     if (match) {
       result = match.id;
       break;
@@ -9802,6 +9803,12 @@ function buildSlackAttachments({ status, color, github }) {
 }
 
 module.exports.buildSlackAttachments = buildSlackAttachments;
+
+function formatChannelName(channel) {
+  return channel.replace(/[#@]/g, '');
+}
+
+module.exports.formatChannelName = formatChannelName;
 
 
 /***/ }),
