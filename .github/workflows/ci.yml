@@ -22,13 +22,17 @@ jobs:
           status: STARTED
           color: warning
       - name: yarn install and test
-        id: test
         run: |
           yarn
           yarn test --json --outputFile=results.json
           node scripts/report-ci-failure.js
         env:
           CI: true
+      - name: report test results
+        if: success()
+        id: results
+        run: |
+          node scripts/report-ci-failure.js
       - name: Notify slack success
         if: success()
         env:
@@ -46,7 +50,7 @@ jobs:
         uses: ./
         with:
           message_id: ${{ steps.slack.outputs.message_id }}
-          block_text: ${{ steps.test.outputs.results }}
+          block_text: ${{ steps.results.outputs.results }}
           channel: 'rp-notifications'
           status: FAILURE
           color: danger
