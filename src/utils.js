@@ -46,3 +46,9 @@ function buildSlackAttachments({ status, color, github }) {
 }
 
 module.exports.buildSlackAttachments = buildSlackAttachments;
+
+function formatChannelName(channel) {
+  return channel.replace(/[#@]/g, '');
+}
+
+module.exports.formatChannelName = formatChannelName;
