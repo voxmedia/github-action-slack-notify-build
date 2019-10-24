@@ -891,27 +891,27 @@ const { buildSlackAttachments } = __webpack_require__(543);
 
 (async () => {
   try {
-    const channel = core.getInput("channel");
-    const status = core.getInput("status");
-    const color = core.getInput("color");
-    const messageId = core.getInput("message_id");
+    const channel = core.getInput('channel');
+    const status = core.getInput('status');
+    const color = core.getInput('color');
+    const messageId = core.getInput('message_id');
     const token = process.env.SLACK_BOT_TOKEN;
     const slack = new WebClient(token);
 
-    if (!channel && !core.getInput("channel_id")) {
+    if (!channel && !core.getInput('channel_id')) {
       core.setFailed(`You must provider either a 'channel' or a 'channel_id'.`);
       return;
     }
 
     const attachments = buildSlackAttachments({ status, color, github });
-    const channelId = core.getInput("channel_id") || await lookUpChannelId({ slack, channel });
+    const channelId = core.getInput('channel_id') || (await lookUpChannelId({ slack, channel }));
 
     if (!channelId) {
       core.setFailed(`Slack channel ${channel} could not be found.`);
       return;
     }
 
-    const apiMethod = Boolean(messageId) ? "update" : "postMessage";
+    const apiMethod = Boolean(messageId) ? 'update' : 'postMessage';
 
     const args = {
       channel: channelId,
@@ -924,7 +924,7 @@ const { buildSlackAttachments } = __webpack_require__(543);
 
     const response = await slack.chat[apiMethod](args);
 
-    core.setOutput("message_id", response.ts);
+    core.setOutput('message_id', response.ts);
   } catch (error) {
     core.setFailed(error.message);
   }
@@ -939,7 +939,7 @@ async function lookUpChannelId({ slack, channel }) {
     // You can inspect each page, find your result, and stop the loop with a `break` statement
     const match = page.channels.find(c => c.name === channel);
     if (match) {
-      result = match.id
+      result = match.id;
       break;
     }
   }
@@ -9759,27 +9759,21 @@ function buildSlackAttachments({ status, color, github }) {
   const owner = payload.repository.owner.login;
   const name = payload.repository.name;
   const event = eventName;
-  const branch =
-    event === "pull_request"
-      ? payload.pull_request.head.ref
-      : ref.replace("refs/heads/", "");
+  const branch = event === 'pull_request' ? payload.pull_request.head.ref : ref.replace('refs/heads/', '');
 
-  const sha =
-    event === "pull_request"
-      ? payload.pull_request.head.sha
-      : github.context.sha;
+  const sha = event === 'pull_request' ? payload.pull_request.head.sha : github.context.sha;
 
   const referenceLink =
-    event === "pull_request"
+    event === 'pull_request'
       ? {
-          title: "Pull Request",
+          title: 'Pull Request',
           value: `<${payload.pull_request.html_url} | ${payload.pull_request.title}>`,
-          short: true
+          short: true,
         }
       : {
-          title: "Branch",
+          title: 'Branch',
           value: `<https://github.com/${owner}/${name}/commit/${sha} | ${branch}>`,
-          short: true
+          short: true,
         };
 
   return [
@@ -9787,23 +9781,23 @@ function buildSlackAttachments({ status, color, github }) {
       color,
       fields: [
         {
-          title: "Action",
+          title: 'Action',
           value: `<https://github.com/${owner}/${name}/commit/${sha}/checks | ${workflow}>`,
-          short: true
+          short: true,
         },
         {
-          title: "Status",
+          title: 'Status',
           value: status,
-          short: true
+          short: true,
         },
         referenceLink,
         {
-          title: "Event",
+          title: 'Event',
           value: event,
-          short: true
-        }
-      ]
-    }
+          short: true,
+        },
+      ],
+    },
   ];
 }
 

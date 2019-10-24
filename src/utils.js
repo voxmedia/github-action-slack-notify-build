@@ -3,27 +3,21 @@ function buildSlackAttachments({ status, color, github }) {
   const owner = payload.repository.owner.login;
   const name = payload.repository.name;
   const event = eventName;
-  const branch =
-    event === "pull_request"
-      ? payload.pull_request.head.ref
-      : ref.replace("refs/heads/", "");
+  const branch = event === 'pull_request' ? payload.pull_request.head.ref : ref.replace('refs/heads/', '');
 
-  const sha =
-    event === "pull_request"
-      ? payload.pull_request.head.sha
-      : github.context.sha;
+  const sha = event === 'pull_request' ? payload.pull_request.head.sha : github.context.sha;
 
   const referenceLink =
-    event === "pull_request"
+    event === 'pull_request'
       ? {
-          title: "Pull Request",
+          title: 'Pull Request',
           value: `<${payload.pull_request.html_url} | ${payload.pull_request.title}>`,
-          short: true
+          short: true,
         }
       : {
-          title: "Branch",
+          title: 'Branch',
           value: `<https://github.com/${owner}/${name}/commit/${sha} | ${branch}>`,
-          short: true
+          short: true,
         };
 
   return [
@@ -31,23 +25,23 @@ function buildSlackAttachments({ status, color, github }) {
       color,
       fields: [
         {
-          title: "Action",
+          title: 'Action',
           value: `<https://github.com/${owner}/${name}/commit/${sha}/checks | ${workflow}>`,
-          short: true
+          short: true,
         },
         {
-          title: "Status",
+          title: 'Status',
           value: status,
-          short: true
+          short: true,
         },
         referenceLink,
         {
-          title: "Event",
+          title: 'Event',
           value: event,
-          short: true
-        }
-      ]
-    }
+          short: true,
+        },
+      ],
+    },
   ];
 }
 
