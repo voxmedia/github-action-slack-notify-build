@@ -19,7 +19,7 @@ jobs:
         SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
       uses: ./
       with:
-        channel: '@josh.larson'
+        channel: 'rp-notifications'
         status: STARTED
         color: warning
     - name: yarn install
@@ -33,6 +33,6 @@ jobs:
       uses: ./
       with:
         message_id: ${{ steps.slack.outputs.message_id }}
-        channel: '@josh.larson'
+        channel: 'rp-notifications'
         status: SUCCESS
         color: good
