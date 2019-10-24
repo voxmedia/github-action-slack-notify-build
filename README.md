@@ -31,7 +31,6 @@ You can use the `success()` and `failure()` conditional checks within your workf
 ```yaml
 - name: Run tests
   # ... your test step here
-
 - name: Notify slack success
   if: success()
   env:
@@ -73,7 +72,6 @@ Note: You must assign a step `id` to the first Slack notification step in order 
 
 - name: Run tests
   # ... your test step here
-
 - name: Notify slack success
   if: success()
   env:
@@ -99,7 +97,7 @@ The name of the channel to post the message to. **Required** if no `channel_id` 
 
 ### `channel_id`
 
-The ID of the channel to post the message to. **Required** if no `channel` is provided.
+The ID of the channel to post the message to. **Required** if no `channel` is provided, or if you need to send to a DM.
 
 ### `color`
 
@@ -129,4 +127,3 @@ To use this GitHub Action, you'll need a [Slack bot token](https://api.slack.com
 1. **Add a Bot user.** Browse to the "Bot users" page listed in the sidebar. Name your bot "GitHub Action" (you can change this later) and leave the other default settings as-is.
 1. **Set an icon for your bot.** Browse to the "Basic information" page listed in the sidebar. Scroll down to the section titled "Display information" to set an icon.
 1. **Install your app to your workspace.** At the top of the "Basic information" page, you can find a section titled "Install your app to your workspace". Click on it, then use the button to complete the installation.
-
