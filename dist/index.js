@@ -929,7 +929,7 @@ const { buildSlackAttachments, formatChannelName } = __webpack_require__(543);
           type: 'section',
           text: {
             type: 'mrkdwn',
-            text: '```' + blockText + '```',
+            text: blockText,
           },
         },
       ];

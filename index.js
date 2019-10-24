@@ -43,7 +43,7 @@ const { buildSlackAttachments, formatChannelName } = require('./src/utils');
           type: 'section',
           text: {
             type: 'mrkdwn',
-            text: '```' + blockText + '```',
+            text: blockText,
           },
         },
       ];
