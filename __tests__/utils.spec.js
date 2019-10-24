@@ -4,7 +4,7 @@ import { GITHUB_PUSH_EVENT, GITHUB_PR_EVENT } from '../fixtures';
 describe('Utils', () => {
   describe('formatChannelName', () => {
     it('strips #', () => {
-      expect(formatChannelName('#app-notifications')).toBe('app-notifications');
+      expect(formatChannelName('#app-notifications')).toBe('app-notificationslol');
     });
 
     it('strips @', () => {

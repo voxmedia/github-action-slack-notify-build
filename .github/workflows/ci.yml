@@ -22,12 +22,15 @@ jobs:
           status: STARTED
           color: warning
       - name: yarn install and test
+        id: test
         run: |
           yarn
-          yarn test
+          yarn test --json --outputFile=results.json
+          node scripts/report-ci-failure.js
         env:
           CI: true
       - name: Notify slack success
+        if: success()
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         uses: ./
@@ -36,3 +39,14 @@ jobs:
           channel: 'rp-notifications'
           status: SUCCESS
           color: good
+      - name: Notify slack failure
+        if: failure()
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: ./
+        with:
+          message_id: ${{ steps.slack.outputs.message_id }}
+          block_text: ${{ steps.test.outputs.results }}
+          channel: 'rp-notifications'
+          status: FAILURE
+          color: danger

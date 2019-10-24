@@ -1,0 +1,124 @@
+{
+  "numFailedTestSuites": 0,
+  "numFailedTests": 0,
+  "numPassedTestSuites": 1,
+  "numPassedTests": 10,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 10,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1571949434345,
+  "success": true,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["Utils", "formatChannelName"],
+          "failureMessages": [],
+          "fullName": "Utils formatChannelName strips #",
+          "location": null,
+          "status": "passed",
+          "title": "strips #"
+        },
+        {
+          "ancestorTitles": ["Utils", "formatChannelName"],
+          "failureMessages": [],
+          "fullName": "Utils formatChannelName strips @",
+          "location": null,
+          "status": "passed",
+          "title": "strips @"
+        },
+        {
+          "ancestorTitles": ["Utils", "buildSlackAttachments"],
+          "failureMessages": [],
+          "fullName": "Utils buildSlackAttachments passes color",
+          "location": null,
+          "status": "passed",
+          "title": "passes color"
+        },
+        {
+          "ancestorTitles": ["Utils", "buildSlackAttachments"],
+          "failureMessages": [],
+          "fullName": "Utils buildSlackAttachments shows status",
+          "location": null,
+          "status": "passed",
+          "title": "shows status"
+        },
+        {
+          "ancestorTitles": ["Utils", "buildSlackAttachments", "for push events"],
+          "failureMessages": [],
+          "fullName": "Utils buildSlackAttachments for push events links to the action workflow",
+          "location": null,
+          "status": "passed",
+          "title": "links to the action workflow"
+        },
+        {
+          "ancestorTitles": ["Utils", "buildSlackAttachments", "for push events"],
+          "failureMessages": [],
+          "fullName": "Utils buildSlackAttachments for push events shows the event name",
+          "location": null,
+          "status": "passed",
+          "title": "shows the event name"
+        },
+        {
+          "ancestorTitles": ["Utils", "buildSlackAttachments", "for push events"],
+          "failureMessages": [],
+          "fullName": "Utils buildSlackAttachments for push events links to the branch",
+          "location": null,
+          "status": "passed",
+          "title": "links to the branch"
+        },
+        {
+          "ancestorTitles": ["Utils", "buildSlackAttachments", "for PR events"],
+          "failureMessages": [],
+          "fullName": "Utils buildSlackAttachments for PR events links to the action workflow",
+          "location": null,
+          "status": "passed",
+          "title": "links to the action workflow"
+        },
+        {
+          "ancestorTitles": ["Utils", "buildSlackAttachments", "for PR events"],
+          "failureMessages": [],
+          "fullName": "Utils buildSlackAttachments for PR events shows the event name",
+          "location": null,
+          "status": "passed",
+          "title": "shows the event name"
+        },
+        {
+          "ancestorTitles": ["Utils", "buildSlackAttachments", "for PR events"],
+          "failureMessages": [],
+          "fullName": "Utils buildSlackAttachments for PR events links to the PR",
+          "location": null,
+          "status": "passed",
+          "title": "links to the PR"
+        }
+      ],
+      "endTime": 1571949435192,
+      "message": "",
+      "name": "/Users/joshlarson/Projects/github-action-slack-notify-build/__tests__/utils.spec.js",
+      "startTime": 1571949434697,
+      "status": "passed",
+      "summary": ""
+    }
+  ],
+  "wasInterrupted": false
+}

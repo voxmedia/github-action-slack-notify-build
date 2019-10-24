@@ -895,6 +895,7 @@ const { buildSlackAttachments, formatChannelName } = __webpack_require__(543);
     const status = core.getInput('status');
     const color = core.getInput('color');
     const messageId = core.getInput('message_id');
+    const blockText = core.getInput('block_text');
     const token = process.env.SLACK_BOT_TOKEN;
     const slack = new WebClient(token);
 
@@ -920,6 +921,18 @@ const { buildSlackAttachments, formatChannelName } = __webpack_require__(543);
 
     if (messageId) {
       args.ts = messageId;
+    }
+
+    if (blockText) {
+      args.blocks = [
+        {
+          type: 'section',
+          text: {
+            type: 'mrkdwn',
+            text: '```' + blockText + '```',
+          },
+        },
+      ];
     }
 
     const response = await slack.chat[apiMethod](args);
