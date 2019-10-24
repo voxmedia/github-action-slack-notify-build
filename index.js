@@ -1,35 +1,31 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const fetch = require('isomorphic-unfetch');
+const { WebClient } = require('@slack/web-api');
 
-try {
-  const channel = core.getInput('channel');
-  const status = core.getInput('status');
-  const color = core.getInput('color');
-  const messageId = core.getInput('message_id');
+(async () => {
+  try {
+    const channel = core.getInput('channel');
+    const status = core.getInput('status');
+    const color = core.getInput('color');
+    const messageId = core.getInput('message_id');
+    const token = process.env.SLACK_BOT_TOKEN;
+    const slack = new WebClient(token);
 
-  const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN;
-  const slackPayload = buildSlackPayload({ channel, status, color, github, messageId });
-  const chatApiMethod = Boolean(messageId) ? 'update' : 'postMessage';
+    const attachments = buildSlackAttachments({ status, color, github });
+    const apiMethod = Boolean(messageId) ? 'update' : 'postMessage';
 
-  fetch(`https://slack.com/api/chat.${chatApiMethod}`, {
-    method: 'post',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${SLACK_BOT_TOKEN}`,
-    },
-    body: JSON.stringify(slackPayload),
-  }).then(response => response.json().then(data => {
-    console.log(JSON.stringify(data));
-    if (data.ok) {
-      core.setOutput('message_id', data.ts);
-    }
-  })).catch(e => console.log(JSON.stringify(e)));
-} catch (error) {
-  core.setFailed(error.message);
-}
+    const response = await slack.chat[apiMethod]({
+      channel,
+      attachments
+    });
 
-function buildSlackPayload({ channel, status, color, github, messageId }) {
+    core.setOutput('message_id', response.ts);
+  } catch (error) {
+    core.setFailed(error.message);
+  }
+})();
+
+function buildSlackAttachments({ status, color, github }) {
   const { payload, ref, workflow, eventName } = github.context;
   const owner = payload.repository.owner.login;
   const name = payload.repository.name;
@@ -57,9 +53,7 @@ function buildSlackPayload({ channel, status, color, github, messageId }) {
           short: true,
         };
 
-  const slackPayload = {
-    channel,
-    attachments: [
+  return [
       {
         color,
         fields: [
@@ -81,12 +75,5 @@ function buildSlackPayload({ channel, status, color, github, messageId }) {
           },
         ],
       },
-    ],
-  };
-
-  if (messageId) {
-    slackPayload.ts = messageId;
-  }
-
-  return slackPayload;
+    ];
 }
