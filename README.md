@@ -62,7 +62,7 @@ Note: You must assign a step `id` to the first Slack notification step in order 
 ```yaml
 - name: Notify slack success
   if: success()
-  id: slack
+  id: slack # IMPORTANT: reference this step ID value in future Slack steps
   env:
     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
   uses: voxmedia/github-action-slack-notify-build@master
