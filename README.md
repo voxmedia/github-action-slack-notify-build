@@ -31,7 +31,6 @@ You can use the `success()` and `failure()` conditional checks within your workf
 ```yaml
 - name: Run tests
   # ... your test step here
-
 - name: Notify slack success
   if: success()
   env:
@@ -53,19 +52,70 @@ You can use the `success()` and `failure()` conditional checks within your workf
     color: danger
 ```
 
+### Updating an Existing Message
+
+If you need to send multiple Slack build updates and you prefer to update a single message instead of posting multiple messages, you can pass a `message_id` to future steps.
+
+Note: You must assign a step `id` to the first Slack notification step in order to reference it for future steps:
+
+```yaml
+- name: Notify slack success
+  if: success()
+  id: slack # IMPORTANT: reference this step ID value in future Slack steps
+  env:
+    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+  uses: voxmedia/github-action-slack-notify-build@master
+  with:
+    channel: app-alerts
+    status: STARTING
+    color: warning
+
+- name: Run tests
+  # ... your test step here
+- name: Notify slack success
+  if: success()
+  env:
+    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+  uses: voxmedia/github-action-slack-notify-build@master
+  with:
+    # Updates existing message from the first step
+    message_id: ${{ steps.slack.outputs.message_id }}
+    channel: app-alerts
+    status: SUCCESS
+    color: good
+```
+
 ## Inputs
-
-### `channel`
-
-**Required** The ID or name of the channel to post the message to.
 
 ### `status`
 
 **Required** The status to show for the action, e.g. `STARTED` or `FAILED`.
 
+### `channel`
+
+The name of the channel to post the message to. **Required** if no `channel_id` is provided.
+
+### `channel_id`
+
+The ID of the channel to post the message to. **Required** if no `channel` is provided, or if you need to send to a DM.
+
 ### `color`
 
 The color to use for the notification. Can be a hex value or any [valid Slack color level](https://api.slack.com/docs/message-attachments#color) (e.g. `good`). Defaults to `#cccccc`.
+
+### `message_id`
+
+The ID of a previous Slack message to update instead of posting a new message. Typically passed using the `steps` context:
+
+```yaml
+message_id: ${{ steps.<your_first_slack_step_id>.outputs.message_id }}
+```
+
+## Outputs
+
+### `message_id`
+
+Returns the unique message ID, which is a timestamp which can be passed to future Slack API calls as `ts`.
 
 ## Setup
 
@@ -77,4 +127,3 @@ To use this GitHub Action, you'll need a [Slack bot token](https://api.slack.com
 1. **Add a Bot user.** Browse to the "Bot users" page listed in the sidebar. Name your bot "GitHub Action" (you can change this later) and leave the other default settings as-is.
 1. **Set an icon for your bot.** Browse to the "Basic information" page listed in the sidebar. Scroll down to the section titled "Display information" to set an icon.
 1. **Install your app to your workspace.** At the top of the "Basic information" page, you can find a section titled "Install your app to your workspace". Click on it, then use the button to complete the installation.
-

@@ -1,79 +1,63 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const fetch = require('isomorphic-unfetch');
+const { WebClient } = require('@slack/web-api');
+const { buildSlackAttachments, formatChannelName } = require('./src/utils');
 
-try {
-  const channel = core.getInput('channel');
-  const status = core.getInput('status');
-  const color = core.getInput('color');
+(async () => {
+  try {
+    const channel = core.getInput('channel');
+    const status = core.getInput('status');
+    const color = core.getInput('color');
+    const messageId = core.getInput('message_id');
+    const token = process.env.SLACK_BOT_TOKEN;
+    const slack = new WebClient(token);
 
-  const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN;
-  const slackPayload = buildSlackPayload({ channel, status, color, github });
+    if (!channel && !core.getInput('channel_id')) {
+      core.setFailed(`You must provider either a 'channel' or a 'channel_id'.`);
+      return;
+    }
 
-  fetch('https://slack.com/api/chat.postMessage', {
-    method: 'post',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${SLACK_BOT_TOKEN}`,
-    },
-    body: JSON.stringify(slackPayload),
-  });
-} catch (error) {
-  core.setFailed(error.message);
-}
+    const attachments = buildSlackAttachments({ status, color, github });
+    const channelId = core.getInput('channel_id') || (await lookUpChannelId({ slack, channel }));
 
-function buildSlackPayload({ channel, status, color, github }) {
-  const { payload, ref, workflow, eventName } = github.context;
-  const owner = payload.repository.owner.login;
-  const name = payload.repository.name;
-  const event = eventName;
-  const branch =
-    event === 'pull_request'
-      ? payload.pull_request.head.ref
-      : ref.replace('refs/heads/', '');
+    if (!channelId) {
+      core.setFailed(`Slack channel ${channel} could not be found.`);
+      return;
+    }
 
-  const sha =
-    event === 'pull_request'
-      ? payload.pull_request.head.sha
-      : github.context.sha;
+    const apiMethod = Boolean(messageId) ? 'update' : 'postMessage';
 
-  const referenceLink =
-    event === 'pull_request'
-      ? {
-          title: 'Pull Request',
-          value: `<${payload.pull_request.html_url} | ${payload.pull_request.title}>`,
-          short: true,
-        }
-      : {
-          title: 'Branch',
-          value: `<https://github.com/${owner}/${name}/commit/${sha} | ${branch}>`,
-          short: true,
-        };
+    const args = {
+      channel: channelId,
+      attachments,
+    };
 
-  return {
-    channel,
-    attachments: [
-      {
-        color,
-        fields: [
-          {
-            title: 'Action',
-            value: `<https://github.com/${owner}/${name}/commit/${sha}/checks | ${workflow}>`,
-            short: true,
-          },
-          {
-            title: 'Status',
-            value: status,
-            short: true,
-          },
-          referenceLink,
-          {
-            title: 'Event',
-            value: event,
-            short: true,
-          },
-        ],
-      },
-    ],
-  };
+    if (messageId) {
+      args.ts = messageId;
+    }
+
+    const response = await slack.chat[apiMethod](args);
+
+    core.setOutput('message_id', response.ts);
+  } catch (error) {
+    core.setFailed(error.message);
+  }
+})();
+
+async function lookUpChannelId({ slack, channel }) {
+  let result;
+  const formattedChannel = formatChannelName(channel);
+
+  // Async iteration is similar to a simple for loop.
+  // Use only the first two parameters to get an async iterator.
+  for await (const page of slack.paginate('conversations.list', { types: 'public_channel, private_channel' })) {
+    // You can inspect each page, find your result, and stop the loop with a `break` statement
+    const match = page.channels.find(c => c.name === formattedChannel);
+    if (match) {
+      result = match.id;
+      break;
+    }
+  }
+
+  return result;
 }
