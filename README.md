@@ -7,7 +7,7 @@ A [Slack bot token](https://api.slack.com/docs/token-types) is required to use t
 ## Usage
 
 ```yaml
-uses: voxmedia/github-action-slack-notify-build@master
+uses: voxmedia/github-action-slack-notify-build@v1
 with:
   channel: app-alerts
   status: STARTED
@@ -35,7 +35,7 @@ You can use the `success()` and `failure()` conditional checks within your workf
   if: success()
   env:
     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-  uses: voxmedia/github-action-slack-notify-build@master
+  uses: voxmedia/github-action-slack-notify-build@v1
   with:
     channel: app-alerts
     status: SUCCESS
@@ -45,7 +45,7 @@ You can use the `success()` and `failure()` conditional checks within your workf
   if: failure()
   env:
     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-  uses: voxmedia/github-action-slack-notify-build@master
+  uses: voxmedia/github-action-slack-notify-build@v1
   with:
     channel: app-alerts
     status: FAILED
@@ -64,7 +64,7 @@ Note: You must assign a step `id` to the first Slack notification step in order 
   id: slack # IMPORTANT: reference this step ID value in future Slack steps
   env:
     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-  uses: voxmedia/github-action-slack-notify-build@master
+  uses: voxmedia/github-action-slack-notify-build@v1
   with:
     channel: app-alerts
     status: STARTING
@@ -76,7 +76,7 @@ Note: You must assign a step `id` to the first Slack notification step in order 
   if: success()
   env:
     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-  uses: voxmedia/github-action-slack-notify-build@master
+  uses: voxmedia/github-action-slack-notify-build@v1
   with:
     # Updates existing message from the first step
     message_id: ${{ steps.slack.outputs.message_id }}
