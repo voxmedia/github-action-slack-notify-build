@@ -24,34 +24,6 @@ When used with the `pull_request` event, a link to the originating pull request 
 
 <img src="docs/pr.png" alt="Screenshot of the pull_request event" width="540">
 
-### Reporting Success or Failure
-
-You can use the `success()` and `failure()` conditional checks within your workflow to determine which build notification to send:
-
-```yaml
-- name: Run tests
-  # ... your test step here
-- name: Notify slack success
-  if: success()
-  env:
-    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-  uses: voxmedia/github-action-slack-notify-build@v1
-  with:
-    channel: app-alerts
-    status: SUCCESS
-    color: good
-
-- name: Notify slack fail
-  if: failure()
-  env:
-    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-  uses: voxmedia/github-action-slack-notify-build@v1
-  with:
-    channel: app-alerts
-    status: FAILED
-    color: danger
-```
-
 ### Updating an Existing Message
 
 If you need to send multiple Slack build updates and you prefer to update a single message instead of posting multiple messages, you can pass a `message_id` to future steps.
@@ -83,6 +55,34 @@ Note: You must assign a step `id` to the first Slack notification step in order 
     channel: app-alerts
     status: SUCCESS
     color: good
+```
+
+### Reporting Success or Failure
+
+You can use the `success()` and `failure()` conditional checks within your workflow to determine which build notification to send:
+
+```yaml
+- name: Run tests
+  # ... your test step here
+- name: Notify slack success
+  if: success()
+  env:
+    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+  uses: voxmedia/github-action-slack-notify-build@v1
+  with:
+    channel: app-alerts
+    status: SUCCESS
+    color: good
+
+- name: Notify slack fail
+  if: failure()
+  env:
+    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+  uses: voxmedia/github-action-slack-notify-build@v1
+  with:
+    channel: app-alerts
+    status: FAILED
+    color: danger
 ```
 
 ## Inputs
