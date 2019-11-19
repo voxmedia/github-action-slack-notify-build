@@ -19,16 +19,23 @@ git checkout master && git pull
 # build out the new dist code
 yarn build
 
-# commit it (where X.X is the new version)
-git commit -am 'vX.X'
+# commit it (where X.X.X is the new version)
+git commit -am 'vX.X.X'
 
-# tag the specific version (where X.X is the new version)
-git tag -a vX.X -m 'vX.X'
+# tag the specific version (where X.X.X is the new version)
+git tag -a vX.X -m 'vX.X.X'
 
 # update the tag for the major version (where X is the major version)
-git tag -a vX
+# FIRST: delete the existing major version tag
+git tag -d vX
 
-# push up the commit and the t
+# NEXT: re-add the major version tag
+git tag vX
+
+# FINALLY: remove the old major version tag from remote origin:
+git push origin :refs/tags/vX
+
+# push up the commit and the new tags
 git push && git push --tags
 ```
 
