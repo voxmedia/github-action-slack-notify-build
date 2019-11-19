@@ -28,6 +28,8 @@ When used with the `pull_request` event, a link to the originating pull request 
 
 If you need to send multiple Slack build updates and you prefer to update a single message instead of posting multiple messages, you can pass a `message_id` to future steps.
 
+<img src="docs/updating_message.gif" alt="Updating existing messages" width="540">
+
 Note: You must assign a step `id` to the first Slack notification step in order to reference it for future steps:
 
 ```yaml

@@ -41,6 +41,9 @@ function buildSlackAttachments({ status, color, github }) {
           short: true,
         },
       ],
+      footer_icon: 'https://github.githubassets.com/favicon.ico',
+      footer: `<https://github.com/${owner}/${name} | ${owner}/${name}>`,
+      ts: Math.floor(Date.now() / 1000),
     },
   ];
 }
