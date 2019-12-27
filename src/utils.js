@@ -1,5 +1,7 @@
+const { context } = require('@actions/github');
+
 function buildSlackAttachments({ status, color, github }) {
-  console.log(JSON.stringify(github.context));
+  console.log(JSON.stringify(context.repo, null, 2));
   const { payload, ref, workflow, eventName } = github.context;
   const owner = payload.repository.owner.login;
   const name = payload.repository.name;
