@@ -20,7 +20,7 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         uses: ./
         with:
-          channel: 'rp-notifications'
+          channel_id: CB9QT2NNR
           status: STARTED
           color: warning
       - name: Get yarn cache
@@ -44,6 +44,6 @@ jobs:
         uses: ./
         with:
           message_id: ${{ steps.slack.outputs.message_id }}
-          channel: 'rp-notifications'
+          channel_id: CB9QT2NNR
           status: SUCCESS
           color: good
