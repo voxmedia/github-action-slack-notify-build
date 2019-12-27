@@ -1,4 +1,5 @@
 function buildSlackAttachments({ status, color, github }) {
+  console.log(JSON.stringify(github.context));
   const { payload, ref, workflow, eventName } = github.context;
   const owner = payload.repository.owner.login;
   const name = payload.repository.name;
