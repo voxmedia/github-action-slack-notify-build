@@ -9758,10 +9758,8 @@ function hasFirstPage (link) {
 const { context } = __webpack_require__(469);
 
 function buildSlackAttachments({ status, color, github }) {
-  console.log(JSON.stringify(context.repo, null, 2));
   const { payload, ref, workflow, eventName } = github.context;
-  const owner = payload.repository.owner.login;
-  const name = payload.repository.name;
+  const { owner, repo } = context.repo;
   const event = eventName;
   const branch = event === 'pull_request' ? payload.pull_request.head.ref : ref.replace('refs/heads/', '');
 
@@ -9776,7 +9774,7 @@ function buildSlackAttachments({ status, color, github }) {
         }
       : {
           title: 'Branch',
-          value: `<https://github.com/${owner}/${name}/commit/${sha} | ${branch}>`,
+          value: `<https://github.com/${owner}/${repo}/commit/${sha} | ${branch}>`,
           short: true,
         };
 
@@ -9786,7 +9784,7 @@ function buildSlackAttachments({ status, color, github }) {
       fields: [
         {
           title: 'Action',
-          value: `<https://github.com/${owner}/${name}/commit/${sha}/checks | ${workflow}>`,
+          value: `<https://github.com/${owner}/${repo}/commit/${sha}/checks | ${workflow}>`,
           short: true,
         },
         {
@@ -9802,7 +9800,7 @@ function buildSlackAttachments({ status, color, github }) {
         },
       ],
       footer_icon: 'https://github.githubassets.com/favicon.ico',
-      footer: `<https://github.com/${owner}/${name} | ${owner}/${name}>`,
+      footer: `<https://github.com/${owner}/${repo} | ${owner}/${repo}>`,
       ts: Math.floor(Date.now() / 1000),
     },
   ];
