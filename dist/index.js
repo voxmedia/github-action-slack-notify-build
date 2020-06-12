@@ -895,7 +895,7 @@ const { buildSlackAttachments, formatChannelName } = __webpack_require__(543);
     const status = core.getInput('status');
     const color = core.getInput('color');
     const messageId = core.getInput('message_id');
-    const token = process.env.SLACK_BOT_TOKEN;
+    const token = core.getInput('token');
     const slack = new WebClient(token);
 
     if (!channel && !core.getInput('channel_id')) {
