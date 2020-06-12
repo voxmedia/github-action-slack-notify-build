@@ -35,7 +35,7 @@ describe('Utils', () => {
 
         expect(attachments[0].fields.find(a => a.title === 'Action')).toEqual({
           title: 'Action',
-          value: `<https://github.com/voxmedia/github-action-slack-notify-build/commit/abc123/checks | CI>`,
+          value: `<https://github.com/RentTheRunway/github-action-slack-notify-build/commit/abc123/checks | CI>`,
           short: true,
         });
       });
@@ -55,7 +55,7 @@ describe('Utils', () => {
 
         expect(attachments[0].fields.find(a => a.title === 'Branch')).toEqual({
           title: 'Branch',
-          value: `<https://github.com/voxmedia/github-action-slack-notify-build/commit/abc123 | my-branch>`,
+          value: `<https://github.com/RentTheRunway/github-action-slack-notify-build/commit/abc123 | my-branch>`,
           short: true,
         });
       });
@@ -67,7 +67,7 @@ describe('Utils', () => {
 
         expect(attachments[0].fields.find(a => a.title === 'Action')).toEqual({
           title: 'Action',
-          value: `<https://github.com/voxmedia/github-action-slack-notify-build/commit/xyz678/checks | CI>`,
+          value: `<https://github.com/RentTheRunway/github-action-slack-notify-build/commit/xyz678/checks | CI>`,
           short: true,
         });
       });
@@ -87,7 +87,7 @@ describe('Utils', () => {
 
         expect(attachments[0].fields.find(a => a.title === 'Pull Request')).toEqual({
           title: 'Pull Request',
-          value: `<https://github.com/voxmedia/github-action-slack-notify-build/pulls/1 | This is a PR>`,
+          value: `<https://github.com/RentTheRunway/github-action-slack-notify-build/pulls/1 | This is a PR>`,
           short: true,
         });
       });

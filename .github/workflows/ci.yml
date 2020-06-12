@@ -16,11 +16,10 @@ jobs:
           node-version: 12
       - name: Notify slack
         id: slack
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         uses: ./
         with:
-          channel_id: CB9QT2NNR
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          channel_id: infra-notifications
           status: STARTED
           color: warning
       - name: Get yarn cache
@@ -39,11 +38,10 @@ jobs:
         env:
           CI: true
       - name: Notify slack success
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         uses: ./
         with:
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
           message_id: ${{ steps.slack.outputs.message_id }}
-          channel_id: CB9QT2NNR
+          channel_id: infra-notifications
           status: SUCCESS
           color: good

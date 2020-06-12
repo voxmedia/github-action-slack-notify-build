@@ -7,13 +7,12 @@ A [Slack bot token](https://api.slack.com/docs/token-types) is required to use t
 ## Usage
 
 ```yaml
-uses: voxmedia/github-action-slack-notify-build@v1
+uses: RentTheRunway/github-action-slack-notify-build@v1
 with:
+  token: ${{ secrets.SLACK_BOT_TOKEN }}
   channel: app-alerts
   status: STARTED
   color: good
-env:
-  SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 ```
 
 The Slack notification leverages attachments to group important information together and provide valuable links:
@@ -36,10 +35,9 @@ Note: You must assign a step `id` to the first Slack notification step in order 
 - name: Notify slack success
   if: success()
   id: slack # IMPORTANT: reference this step ID value in future Slack steps
-  env:
-    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-  uses: voxmedia/github-action-slack-notify-build@v1
+  uses: RentTheRunway/github-action-slack-notify-build@v1
   with:
+    token: ${{ secrets.SLACK_BOT_TOKEN }}
     channel: app-alerts
     status: STARTING
     color: warning
@@ -48,11 +46,10 @@ Note: You must assign a step `id` to the first Slack notification step in order 
   # ... your test step here
 - name: Notify slack success
   if: success()
-  env:
-    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-  uses: voxmedia/github-action-slack-notify-build@v1
+  uses: RentTheRunway/github-action-slack-notify-build@v1
   with:
     # Updates existing message from the first step
+    token: ${{ secrets.SLACK_BOT_TOKEN }}
     message_id: ${{ steps.slack.outputs.message_id }}
     channel: app-alerts
     status: SUCCESS
@@ -68,20 +65,18 @@ You can use the `success()` and `failure()` conditional checks within your workf
   # ... your test step here
 - name: Notify slack success
   if: success()
-  env:
-    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-  uses: voxmedia/github-action-slack-notify-build@v1
+  uses: RentTheRunway/github-action-slack-notify-build@v1
   with:
+    token: ${{ secrets.SLACK_BOT_TOKEN }}
     channel: app-alerts
     status: SUCCESS
     color: good
 
 - name: Notify slack fail
   if: failure()
-  env:
-    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-  uses: voxmedia/github-action-slack-notify-build@v1
+  uses: RentTheRunway/github-action-slack-notify-build@v1
   with:
+    token: ${{ secrets.SLACK_BOT_TOKEN }}
     channel: app-alerts
     status: FAILED
     color: danger

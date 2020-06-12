@@ -1,7 +1,7 @@
 const repository = {
   name: 'github-action-slack-notify-build',
   owner: {
-    login: 'voxmedia',
+    login: 'RentTheRunway',
   },
 };
 
@@ -22,7 +22,7 @@ export const GITHUB_PR_EVENT = {
     payload: {
       repository,
       pull_request: {
-        html_url: 'https://github.com/voxmedia/github-action-slack-notify-build/pulls/1',
+        html_url: 'https://github.com/RentTheRunway/github-action-slack-notify-build/pulls/1',
         title: 'This is a PR',
         head: {
           ref: 'my-branch',
