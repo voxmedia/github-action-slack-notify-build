@@ -23,7 +23,7 @@ yarn build
 git commit -am 'vX.X.X'
 
 # tag the specific version (where X.X.X is the new version)
-git tag -a vX.X -m 'vX.X.X'
+git tag -a vX.X.X -m 'vX.X.X'
 
 # update the tag for the major version (where X is the major version)
 # FIRST: delete the existing major version tag
