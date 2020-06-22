@@ -130,6 +130,16 @@ To use this GitHub Action, you'll need a [Slack bot token](https://api.slack.com
 1. **Set an icon for your bot.** Browse to the "Basic information" page listed in the sidebar. Scroll down to the section titled "Display information" to set an icon.
 1. **Install your app to your workspace.** At the top of the "Basic information" page, you can find a section titled "Install your app to your workspace". Click on it, then use the button to complete the installation.
 
+### Slack App OAuth Scopes
+
+In order to use your Slack App with this GitHub Action, be sure to enable the following OAuth scopes:
+
+| Scope           | Required?                                  |
+| --------------- | ------------------------------------------ |
+| `chat:write`    | Yes                                        |
+| `channels:read` | If using `channel` instead of `channel_id` |
+| `groups:read`   | If using `channel` instead of `channel_id` |
+
 ## License
 
 The scripts and documentation in this project are released under the [Apache 2.0 License](LICENSE).
