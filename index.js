@@ -28,7 +28,7 @@ const { buildSlackAttachments, formatChannelName } = require('./src/utils');
     const apiMethod = Boolean(messageId) ? 'update' : 'postMessage';
 
     const args = {
-      channelZZZZ: channelId,
+      channel: channelId,
       attachments,
     };
 

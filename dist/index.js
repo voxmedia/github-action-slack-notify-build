@@ -972,7 +972,7 @@ const { buildSlackAttachments, formatChannelName } = __webpack_require__(543);
     const apiMethod = Boolean(messageId) ? 'update' : 'postMessage';
 
     const args = {
-      channelZZZZ: channelId,
+      channel: channelId,
       attachments,
     };
 
