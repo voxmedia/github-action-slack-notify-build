@@ -972,7 +972,7 @@ const { buildSlackAttachments, formatChannelName } = __webpack_require__(543);
     const apiMethod = Boolean(messageId) ? 'update' : 'postMessage';
 
     const args = {
-      channel: channelId,
+      channelZZZZ: channelId,
       attachments,
     };
 
@@ -994,7 +994,7 @@ async function lookUpChannelId({ slack, channel }) {
 
   // Async iteration is similar to a simple for loop.
   // Use only the first two parameters to get an async iterator.
-  for await (const page of slack.paginate('conversations.listZZZZZZ', { types: 'public_channel, private_channel' })) {
+  for await (const page of slack.paginate('conversations.list', { types: 'public_channel, private_channel' })) {
     // You can inspect each page, find your result, and stop the loop with a `break` statement
     const match = page.channels.find(c => c.name === formattedChannel);
     if (match) {
