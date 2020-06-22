@@ -97,6 +97,8 @@ You can use the `success()` and `failure()` conditional checks within your workf
 
 The name of the channel to post the message to. **Required** if no `channel_id` is provided.
 
+_Note_: If your workspace has many channels, supplying only a `channel` may cause rate limiting issues with this GitHub Action. Consider supplying a `channel_id` instead.
+
 ### `channel_id`
 
 The ID of the channel to post the message to. **Required** if no `channel` is provided, or if you need to send to a DM.
