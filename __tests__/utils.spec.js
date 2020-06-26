@@ -30,6 +30,16 @@ describe('Utils', () => {
     });
 
     describe('for push events', () => {
+      it('links to the repository', () => {
+        const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PUSH_EVENT });
+
+        expect(attachments[0].fields.find(a => a.title === 'Repository')).toEqual({
+          title: 'Repository',
+          value: `<https://github.com/voxmedia/github-action-slack-notify-build | github-action-slack-notify-build>`,
+          short: false,
+        });
+      });
+
       it('links to the action workflow', () => {
         const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PUSH_EVENT });
 
@@ -62,6 +72,16 @@ describe('Utils', () => {
     });
 
     describe('for PR events', () => {
+      it('links to the repository', () => {
+        const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PUSH_EVENT });
+
+        expect(attachments[0].fields.find(a => a.title === 'Repository')).toEqual({
+          title: 'Repository',
+          value: `<https://github.com/voxmedia/github-action-slack-notify-build | github-action-slack-notify-build>`,
+          short: false,
+        });
+      });
+
       it('links to the action workflow', () => {
         const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PR_EVENT });
 

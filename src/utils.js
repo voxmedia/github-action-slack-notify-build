@@ -26,7 +26,7 @@ function buildSlackAttachments({ status, color, github }) {
       color,
       fields: [
         {
-          title: 'Repo',
+          title: 'Repository',
           value: `<https://github.com/${owner}/${repo} | ${repo}>`,
           short: false,
         },

@@ -1,3 +1,7 @@
+# Unreleased
+
+- Added Repository title to the slack message. Makes it easier in Slack to see which repository the build is related to.
+
 # v1.1.2 - 6/22/2020
 
 - Describes which OAuth scopes are required in the docs.
