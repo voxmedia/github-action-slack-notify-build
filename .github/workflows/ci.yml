@@ -15,6 +15,8 @@ jobs:
         with:
           node-version: 12
       - name: Notify slack
+        # Don't attempt to send Slack notifications on fork PRs which don't have access to secrets
+        if: env.SLACK_BOT_TOKEN
         id: slack
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
@@ -39,6 +41,7 @@ jobs:
         env:
           CI: true
       - name: Notify slack success
+        if: env.SLACK_BOT_TOKEN
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         uses: ./
