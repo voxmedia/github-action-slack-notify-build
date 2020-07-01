@@ -1,3 +1,8 @@
+# Unreleased
+
+- Fetches the Actor ("The name of the person or app that initiated the workflow") and sets that as an Author field in the
+  Slack attachment.
+
 # v1.1.2 - 6/22/2020
 
 - Describes which OAuth scopes are required in the docs.
