@@ -105,7 +105,7 @@ The ID of the channel to post the message to. **Required** if no `channel` is pr
 
 ### `color`
 
-The color to use for the notification. Can be a hex value or any [valid Slack color level](https://api.slack.com/docs/message-attachments#color) (e.g. `good`). Defaults to `#cccccc`.
+The color to use for the notification. Can be a hex value or any [valid Slack color level](https://api.slack.com/reference/messaging/attachments#fields) (e.g. `good`). Defaults to `#cccccc`.
 
 ### `message_id`
 
