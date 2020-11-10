@@ -1,3 +1,7 @@
+# v1.1.3 - 11/10/2020
+
+- Bump version of @actions/core
+
 # v1.1.2 - 6/22/2020
 
 - Describes which OAuth scopes are required in the docs.
