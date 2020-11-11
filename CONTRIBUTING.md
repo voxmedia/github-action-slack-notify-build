@@ -14,7 +14,7 @@ Then, an engineer should run locally:
 
 ```bash
 # pull down the latest changes
-git checkout master && git pull
+git checkout main && git pull
 
 # build out the new dist code
 yarn build
