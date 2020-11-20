@@ -2,6 +2,8 @@ import { formatChannelName, buildSlackAttachments } from '../src/utils';
 import { GITHUB_PUSH_EVENT, GITHUB_PR_EVENT } from '../fixtures';
 
 describe('Utils', () => {
+  process.env.GITHUB_REPOSITORY = 'voxmedia/github-action-slack-notify-build';
+
   describe('formatChannelName', () => {
     it('strips #', () => {
       expect(formatChannelName('#app-notifications')).toBe('app-notifications');
@@ -14,13 +16,13 @@ describe('Utils', () => {
 
   describe('buildSlackAttachments', () => {
     it('passes color', () => {
-      const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PUSH_EVENT });
+      const { attachments } = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PUSH_EVENT });
 
       expect(attachments[0].color).toBe('good');
     });
 
     it('shows status', () => {
-      const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PUSH_EVENT });
+      const { attachments } = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PUSH_EVENT });
 
       expect(attachments[0].fields.find(a => a.title === 'Status')).toEqual({
         title: 'Status',
@@ -29,9 +31,17 @@ describe('Utils', () => {
       });
     });
 
+    it('generates a text element', () => {
+      const { text } = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PUSH_EVENT });
+
+      expect(text).toEqual(
+        '<https://github.com/voxmedia/github-action-slack-notify-build/commit/abc123/checks | CI> STARTED'
+      );
+    });
+
     describe('for push events', () => {
       it('links to the action workflow', () => {
-        const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PUSH_EVENT });
+        const { attachments } = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PUSH_EVENT });
 
         expect(attachments[0].fields.find(a => a.title === 'Action')).toEqual({
           title: 'Action',
@@ -41,7 +51,7 @@ describe('Utils', () => {
       });
 
       it('shows the event name', () => {
-        const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PUSH_EVENT });
+        const { attachments } = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PUSH_EVENT });
 
         expect(attachments[0].fields.find(a => a.title === 'Event')).toEqual({
           title: 'Event',
@@ -51,7 +61,7 @@ describe('Utils', () => {
       });
 
       it('links to the branch', () => {
-        const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PUSH_EVENT });
+        const { attachments } = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PUSH_EVENT });
 
         expect(attachments[0].fields.find(a => a.title === 'Branch')).toEqual({
           title: 'Branch',
@@ -63,7 +73,7 @@ describe('Utils', () => {
 
     describe('for PR events', () => {
       it('links to the action workflow', () => {
-        const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PR_EVENT });
+        const { attachments } = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PR_EVENT });
 
         expect(attachments[0].fields.find(a => a.title === 'Action')).toEqual({
           title: 'Action',
@@ -73,7 +83,7 @@ describe('Utils', () => {
       });
 
       it('shows the event name', () => {
-        const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PR_EVENT });
+        const { attachments } = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PR_EVENT });
 
         expect(attachments[0].fields.find(a => a.title === 'Event')).toEqual({
           title: 'Event',
@@ -83,7 +93,7 @@ describe('Utils', () => {
       });
 
       it('links to the PR', () => {
-        const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PR_EVENT });
+        const { attachments } = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PR_EVENT });
 
         expect(attachments[0].fields.find(a => a.title === 'Pull Request')).toEqual({
           title: 'Pull Request',

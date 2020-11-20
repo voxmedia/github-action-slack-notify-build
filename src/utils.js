@@ -21,32 +21,35 @@ function buildSlackAttachments({ status, color, github }) {
           short: true,
         };
 
-  return [
-    {
-      color,
-      fields: [
-        {
-          title: 'Action',
-          value: `<https://github.com/${owner}/${repo}/commit/${sha}/checks | ${workflow}>`,
-          short: true,
-        },
-        {
-          title: 'Status',
-          value: status,
-          short: true,
-        },
-        referenceLink,
-        {
-          title: 'Event',
-          value: event,
-          short: true,
-        },
-      ],
-      footer_icon: 'https://github.githubassets.com/favicon.ico',
-      footer: `<https://github.com/${owner}/${repo} | ${owner}/${repo}>`,
-      ts: Math.floor(Date.now() / 1000),
-    },
-  ];
+  return {
+    text: `<https://github.com/${owner}/${repo}/commit/${sha}/checks | ${workflow}> ${status}`,
+    attachments: [
+      {
+        color,
+        fields: [
+          {
+            title: 'Action',
+            value: `<https://github.com/${owner}/${repo}/commit/${sha}/checks | ${workflow}>`,
+            short: true,
+          },
+          {
+            title: 'Status',
+            value: status,
+            short: true,
+          },
+          referenceLink,
+          {
+            title: 'Event',
+            value: event,
+            short: true,
+          },
+        ],
+        footer_icon: 'https://github.githubassets.com/favicon.ico',
+        footer: `<https://github.com/${owner}/${repo} | ${owner}/${repo}>`,
+        ts: Math.floor(Date.now() / 1000),
+      },
+    ],
+  };
 }
 
 module.exports.buildSlackAttachments = buildSlackAttachments;
