@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/voxmedia/github-action-slack-notify-build/compare/v1.1.3...v1.2.0) (2020-11-20)
+
+
+### Features
+
+* Add semantic release ([6d56e60](https://github.com/voxmedia/github-action-slack-notify-build/commit/6d56e60b7083b18466446dcf4b45f1b566235400))
+
 # v1.1.3 - 11/10/2020
 
 - Bump version of @actions/core
