@@ -40,6 +40,12 @@ jobs:
           yarn test
         env:
           CI: true
+      - name: yarn build
+        run: yarn build
+      - name: release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release
       - name: Notify slack success
         if: env.SLACK_BOT_TOKEN
         env:
