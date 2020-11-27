@@ -8,6 +8,7 @@ const { buildSlackAttachments, formatChannelName } = require('./src/utils');
     const channel = core.getInput('channel');
     const status = core.getInput('status');
     const color = core.getInput('color');
+    const message = core.getInput('message');
     const messageId = core.getInput('message_id');
     const token = process.env.SLACK_BOT_TOKEN;
     const slack = new WebClient(token);
@@ -17,7 +18,7 @@ const { buildSlackAttachments, formatChannelName } = require('./src/utils');
       return;
     }
 
-    const attachments = buildSlackAttachments({ status, color, github });
+    const attachments = buildSlackAttachments({ status, color, github, message });
     const channelId = core.getInput('channel_id') || (await lookUpChannelId({ slack, channel }));
 
     if (!channelId) {

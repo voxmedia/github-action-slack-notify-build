@@ -1,6 +1,6 @@
 const { context } = require('@actions/github');
 
-function buildSlackAttachments({ status, color, github }) {
+function buildSlackAttachments({ status, color, github, message }) {
   const { payload, ref, workflow, eventName, actor } = github.context;
   const { owner, repo } = context.repo;
   const event = eventName;
@@ -21,7 +21,7 @@ function buildSlackAttachments({ status, color, github }) {
           short: true,
         };
 
-  return [
+  var attachment =
     {
       color,
       fields: [
@@ -50,8 +50,16 @@ function buildSlackAttachments({ status, color, github }) {
       footer_icon: 'https://github.githubassets.com/favicon.ico',
       footer: `<https://github.com/${owner}/${repo} | ${owner}/${repo}>`,
       ts: Math.floor(Date.now() / 1000),
-    },
-  ];
+    };
+
+  if(message):
+    attachment['fields'].push({
+        title: 'Message',
+        value: message,
+        short: false,
+      });
+
+  return [attachment];
 }
 
 module.exports.buildSlackAttachments = buildSlackAttachments;

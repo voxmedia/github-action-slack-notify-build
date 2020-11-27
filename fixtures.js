@@ -10,6 +10,7 @@ export const GITHUB_PUSH_EVENT = {
     payload: {
       repository,
     },
+    message: 'message',
     actor: 'Codertocat',
     ref: 'refs/heads/my-branch',
     workflow: 'CI',
@@ -31,6 +32,7 @@ export const GITHUB_PR_EVENT = {
         },
       },
     },
+    message: 'message',
     actor: 'Codertocat',
     workflow: 'CI',
     eventName: 'pull_request',

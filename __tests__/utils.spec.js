@@ -71,6 +71,23 @@ describe('Utils', () => {
           short: true,
         });
       });
+
+      it('show message', () => {
+        const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PUSH_EVENT });
+
+        expect(attachments[0].fields.find(a => a.title === 'Message')).toEqual({
+          title: 'Message',
+          value: 'message',
+          short: false,
+        });
+      });
+
+      it('missing message', () => {
+        event_no_message = Object.assign({}, GITHUB_PUSH_EVENT)
+        const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: event_no_message });
+
+        expect(attachments[0].fields.find(a => a.title === 'Message')).toEqual(undefined);
+      });
     });
 
     describe('for PR events', () => {
@@ -102,6 +119,23 @@ describe('Utils', () => {
           value: `<https://github.com/voxmedia/github-action-slack-notify-build/pulls/1 | This is a PR>`,
           short: true,
         });
+      });
+
+      it('show message', () => {
+        const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PR_EVENT });
+
+        expect(attachments[0].fields.find(a => a.title === 'Message')).toEqual({
+          title: 'Message',
+          value: 'message',
+          short: false,
+        });
+      });
+
+      it('missing message', () => {
+        event_no_message = Object.assign({}, GITHUB_PR_EVENT)
+        const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: event_no_message });
+
+        expect(attachments[0].fields.find(a => a.title === 'Message')).toEqual(undefined);
       });
     });
   });
