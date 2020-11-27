@@ -71,6 +71,21 @@ describe('Utils', () => {
           short: true,
         });
       });
+
+      it('show message', () => {
+        const attachments = buildSlackAttachments({
+          status: 'STARTED',
+          color: 'good',
+          github: GITHUB_PUSH_EVENT,
+          message: 'message',
+        });
+
+        expect(attachments[0].fields.find(a => a.title === 'Message')).toEqual({
+          title: 'Message',
+          value: 'message',
+          short: false,
+        });
+      });
     });
 
     describe('for PR events', () => {
@@ -101,6 +116,21 @@ describe('Utils', () => {
           title: 'Pull Request',
           value: `<https://github.com/voxmedia/github-action-slack-notify-build/pulls/1 | This is a PR>`,
           short: true,
+        });
+      });
+
+      it('show message', () => {
+        const attachments = buildSlackAttachments({
+          status: 'STARTED',
+          color: 'good',
+          github: GITHUB_PR_EVENT,
+          message: 'message',
+        });
+
+        expect(attachments[0].fields.find(a => a.title === 'Message')).toEqual({
+          title: 'Message',
+          value: 'message',
+          short: false,
         });
       });
     });
