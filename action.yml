@@ -1,4 +1,4 @@
-name: 'Slack Notify Build'
+name: 'Slack Notify Build - mirta.com'
 description: 'Report GitHub Actions build status on Slack'
 branding:
   icon: message-square
