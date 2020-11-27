@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/daleMirta/github-action-slack-notify-build/compare/v1.2.0...v1.3.0) (2020-11-27)
+
+
+### Features
+
+* **message:** add custom message to action ([0225736](https://github.com/daleMirta/github-action-slack-notify-build/commit/0225736f198788968effe1056a2b872b7cff833f))
+
 # [1.2.0](https://github.com/voxmedia/github-action-slack-notify-build/compare/v1.1.3...v1.2.0) (2020-11-20)
 
 
