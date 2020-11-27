@@ -10,6 +10,7 @@ export const GITHUB_PUSH_EVENT = {
     payload: {
       repository,
     },
+    actor: 'TestUser',
     ref: 'refs/heads/my-branch',
     workflow: 'CI',
     eventName: 'push',
@@ -30,6 +31,7 @@ export const GITHUB_PR_EVENT = {
         },
       },
     },
+    actor: 'TestUser',
     workflow: 'CI',
     eventName: 'pull_request',
     sha: 'abc123',
