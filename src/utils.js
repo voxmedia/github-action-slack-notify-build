@@ -1,6 +1,6 @@
 const { context } = require('@actions/github');
 
-function buildSlackAttachments({ status, color, github }) {
+function buildSlackAttachments({ status, color, github, env, custom_fields }) {
   const { payload, ref, workflow, eventName, actor } = github.context;
   const { owner, repo } = context.repo;
   const event = eventName;
@@ -21,7 +21,7 @@ function buildSlackAttachments({ status, color, github }) {
           short: true,
         };
 
-  return [
+  let slackAttachments = [
     {
       color,
       fields: [
@@ -52,6 +52,20 @@ function buildSlackAttachments({ status, color, github }) {
       ts: Math.floor(Date.now() / 1000),
     },
   ];
+
+  if (env) {
+    slackAttachments[0].fields.push({
+      title: 'Environment',
+      value: env,
+      short: true,
+    });
+  }
+
+  if (custom_fields) {
+    custom_fields.forEach(field => slackAttachments[0].fields.push(field));
+  }
+
+  return slackAttachments;
 }
 
 module.exports.buildSlackAttachments = buildSlackAttachments;

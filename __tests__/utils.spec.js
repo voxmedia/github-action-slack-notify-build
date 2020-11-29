@@ -41,6 +41,36 @@ describe('Utils', () => {
       });
     });
 
+    it('show env', () => {
+      const attachments = buildSlackAttachments({
+        status: 'STARTED',
+        color: 'good',
+        github: GITHUB_PUSH_EVENT,
+        env: 'prod',
+      });
+
+      expect(attachments[0].fields.find(a => a.title === 'Environment')).toEqual({
+        title: 'Environment',
+        value: 'prod',
+        short: true,
+      });
+    });
+
+    it('show custom fields', () => {
+      const attachments = buildSlackAttachments({
+        status: 'STARTED',
+        color: 'good',
+        github: GITHUB_PUSH_EVENT,
+        custom_fields: [{ title: 'custom', value: 'test', short: true }],
+      });
+
+      expect(attachments[0].fields.find(a => a.title === 'custom')).toEqual({
+        title: 'custom',
+        value: 'test',
+        short: true,
+      });
+    });
+
     describe('for push events', () => {
       it('links to the action workflow', () => {
         const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PUSH_EVENT });

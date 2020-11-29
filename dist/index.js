@@ -1072,6 +1072,8 @@ const { buildSlackAttachments, formatChannelName } = __webpack_require__(543);
     const status = core.getInput('status');
     const color = core.getInput('color');
     const messageId = core.getInput('message_id');
+    const env = core.getInput('env');
+    let custom_fields = core.getInput('custom_fields')
     const token = process.env.SLACK_BOT_TOKEN;
     const slack = new WebClient(token);
 
@@ -1080,7 +1082,20 @@ const { buildSlackAttachments, formatChannelName } = __webpack_require__(543);
       return;
     }
 
-    const attachments = buildSlackAttachments({ status, color, github });
+    if (custom_fields) {
+      try {
+        custom_fields = JSON.parse(custom_fields);
+      } catch(e) {
+        core.setFailed(e);
+        return;
+      }
+      if (!Array.isArray(custom_fields)) {
+        core.setFailed(`Slack custom fields: ${custom_fields} is not Array type`);
+        return;
+      }
+    }
+
+    const attachments = buildSlackAttachments({ status, color, github, env, custom_fields });
     const channelId = core.getInput('channel_id') || (await lookUpChannelId({ slack, channel }));
 
     if (!channelId) {
@@ -10001,8 +10016,8 @@ module.exports = resolveCommand;
 
 const { context } = __webpack_require__(469);
 
-function buildSlackAttachments({ status, color, github }) {
-  const { payload, ref, workflow, eventName } = github.context;
+function buildSlackAttachments({ status, color, github, env, custom_fields}) {
+  const { payload, ref, workflow, eventName, actor } = github.context;
   const { owner, repo } = context.repo;
   const event = eventName;
   const branch = event === 'pull_request' ? payload.pull_request.head.ref : ref.replace('refs/heads/', '');
@@ -10022,7 +10037,7 @@ function buildSlackAttachments({ status, color, github }) {
           short: true,
         };
 
-  return [
+  let slackAttachments = [
     {
       color,
       fields: [
@@ -10042,12 +10057,32 @@ function buildSlackAttachments({ status, color, github }) {
           value: event,
           short: true,
         },
+        {
+          title: 'Author',
+          value: actor,
+          short: true,
+        }
       ],
       footer_icon: 'https://github.githubassets.com/favicon.ico',
       footer: `<https://github.com/${owner}/${repo} | ${owner}/${repo}>`,
       ts: Math.floor(Date.now() / 1000),
     },
   ];
+
+  if (env) {
+    slackAttachments[0].fields.push(
+      {
+        title: 'Environment',
+        value: env,
+        short: true
+      });
+  }
+
+  if (custom_fields) {
+    custom_fields.forEach(field => slackAttachments[0].fields.push(field));
+  }
+
+  return slackAttachments;
 }
 
 module.exports.buildSlackAttachments = buildSlackAttachments;

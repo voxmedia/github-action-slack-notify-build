@@ -20,6 +20,12 @@ inputs:
   message_id:
     description: 'The ID of the existing Slack message to update.'
     required: false
+  env:
+    description: 'The environment of the deployment.'
+    required: false
+  custom_fields:
+    description: 'Custom fields to add to the slack attachment.'
+    required: false
 outputs:
   message_id:
     description: 'The unique timestamp identifier of the Slack message sent'
