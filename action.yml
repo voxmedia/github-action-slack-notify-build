@@ -23,6 +23,9 @@ inputs:
   environment:
     description: 'The environment of the deployment.'
     required: false
+  stage:
+    description: 'The stage of the deployment.'
+    required: false
   custom_fields:
     description: 'Custom fields to add to the slack attachment.'
     required: false

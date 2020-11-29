@@ -71,6 +71,21 @@ describe('Utils', () => {
       });
     });
 
+    it('show stage', () => {
+      const attachments = buildSlackAttachments({
+        status: 'STARTED',
+        color: 'good',
+        github: GITHUB_PUSH_EVENT,
+        stage: 'test',
+      });
+
+      expect(attachments[0].fields.find(a => a.title === 'Stage')).toEqual({
+        title: 'Stage',
+        value: 'test',
+        short: true,
+      });
+    });
+
     describe('for push events', () => {
       it('links to the action workflow', () => {
         const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PUSH_EVENT });

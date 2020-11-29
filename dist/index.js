@@ -1073,6 +1073,7 @@ const { buildSlackAttachments, formatChannelName } = __webpack_require__(543);
     const color = core.getInput('color');
     const messageId = core.getInput('message_id');
     const environment = core.getInput('environment');
+    const stage = core.getInput('stage');
     let custom_fields = core.getInput('custom_fields');
     const token = process.env.SLACK_BOT_TOKEN;
     const slack = new WebClient(token);
@@ -1095,7 +1096,7 @@ const { buildSlackAttachments, formatChannelName } = __webpack_require__(543);
       }
     }
 
-    const attachments = buildSlackAttachments({ status, color, github, environment, custom_fields });
+    const attachments = buildSlackAttachments({ status, color, github, environment, stage, custom_fields });
     const channelId = core.getInput('channel_id') || (await lookUpChannelId({ slack, channel }));
 
     if (!channelId) {
@@ -10016,7 +10017,7 @@ module.exports = resolveCommand;
 
 const { context } = __webpack_require__(469);
 
-function buildSlackAttachments({ status, color, github, environment, custom_fields }) {
+function buildSlackAttachments({ status, color, github, environment, stage, custom_fields }) {
   const { payload, ref, workflow, eventName, actor } = github.context;
   const { owner, repo } = context.repo;
   const event = eventName;
@@ -10073,6 +10074,14 @@ function buildSlackAttachments({ status, color, github, environment, custom_fiel
     slackAttachments[0].fields.push({
       title: 'Environment',
       value: environment,
+      short: true,
+    });
+  }
+
+  if (stage) {
+    slackAttachments[0].fields.push({
+      title: 'Stage',
+      value: stage,
       short: true,
     });
   }

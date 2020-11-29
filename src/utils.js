@@ -1,6 +1,6 @@
 const { context } = require('@actions/github');
 
-function buildSlackAttachments({ status, color, github, environment, custom_fields }) {
+function buildSlackAttachments({ status, color, github, environment, stage, custom_fields }) {
   const { payload, ref, workflow, eventName, actor } = github.context;
   const { owner, repo } = context.repo;
   const event = eventName;
@@ -57,6 +57,14 @@ function buildSlackAttachments({ status, color, github, environment, custom_fiel
     slackAttachments[0].fields.push({
       title: 'Environment',
       value: environment,
+      short: true,
+    });
+  }
+
+  if (stage) {
+    slackAttachments[0].fields.push({
+      title: 'Stage',
+      value: stage,
       short: true,
     });
   }
