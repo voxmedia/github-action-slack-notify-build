@@ -41,12 +41,12 @@ describe('Utils', () => {
       });
     });
 
-    it('show env', () => {
+    it('show environment', () => {
       const attachments = buildSlackAttachments({
         status: 'STARTED',
         color: 'good',
         github: GITHUB_PUSH_EVENT,
-        env: 'prod',
+        environment: 'prod',
       });
 
       expect(attachments[0].fields.find(a => a.title === 'Environment')).toEqual({
