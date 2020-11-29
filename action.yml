@@ -20,7 +20,7 @@ inputs:
   message_id:
     description: 'The ID of the existing Slack message to update.'
     required: false
-  env:
+  environment:
     description: 'The environment of the deployment.'
     required: false
   custom_fields:

@@ -1072,8 +1072,8 @@ const { buildSlackAttachments, formatChannelName } = __webpack_require__(543);
     const status = core.getInput('status');
     const color = core.getInput('color');
     const messageId = core.getInput('message_id');
-    const env = core.getInput('env');
-    let custom_fields = core.getInput('custom_fields')
+    const environment = core.getInput('environment');
+    let custom_fields = core.getInput('custom_fields');
     const token = process.env.SLACK_BOT_TOKEN;
     const slack = new WebClient(token);
 
@@ -1085,7 +1085,7 @@ const { buildSlackAttachments, formatChannelName } = __webpack_require__(543);
     if (custom_fields) {
       try {
         custom_fields = JSON.parse(custom_fields);
-      } catch(e) {
+      } catch (e) {
         core.setFailed(e);
         return;
       }
@@ -1095,7 +1095,7 @@ const { buildSlackAttachments, formatChannelName } = __webpack_require__(543);
       }
     }
 
-    const attachments = buildSlackAttachments({ status, color, github, env, custom_fields });
+    const attachments = buildSlackAttachments({ status, color, github, environment, custom_fields });
     const channelId = core.getInput('channel_id') || (await lookUpChannelId({ slack, channel }));
 
     if (!channelId) {
@@ -10016,7 +10016,7 @@ module.exports = resolveCommand;
 
 const { context } = __webpack_require__(469);
 
-function buildSlackAttachments({ status, color, github, env, custom_fields}) {
+function buildSlackAttachments({ status, color, github, environment, custom_fields }) {
   const { payload, ref, workflow, eventName, actor } = github.context;
   const { owner, repo } = context.repo;
   const event = eventName;
@@ -10061,7 +10061,7 @@ function buildSlackAttachments({ status, color, github, env, custom_fields}) {
           title: 'Author',
           value: actor,
           short: true,
-        }
+        },
       ],
       footer_icon: 'https://github.githubassets.com/favicon.ico',
       footer: `<https://github.com/${owner}/${repo} | ${owner}/${repo}>`,
@@ -10069,13 +10069,12 @@ function buildSlackAttachments({ status, color, github, env, custom_fields}) {
     },
   ];
 
-  if (env) {
-    slackAttachments[0].fields.push(
-      {
-        title: 'Environment',
-        value: env,
-        short: true
-      });
+  if (environment) {
+    slackAttachments[0].fields.push({
+      title: 'Environment',
+      value: environment,
+      short: true,
+    });
   }
 
   if (custom_fields) {
