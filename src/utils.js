@@ -1,7 +1,7 @@
 const { context } = require('@actions/github');
 
-function buildSlackAttachments({ status, color, github }) {
-  const { payload, ref, workflow, eventName } = github.context;
+function buildSlackAttachments({ status, color, github, environment, stage, custom_fields }) {
+  const { payload, ref, workflow, eventName, actor } = github.context;
   const { owner, repo } = context.repo;
   const event = eventName;
   const branch = event === 'pull_request' ? payload.pull_request.head.ref : ref.replace('refs/heads/', '');
@@ -21,7 +21,7 @@ function buildSlackAttachments({ status, color, github }) {
           short: true,
         };
 
-  return [
+  let slackAttachments = [
     {
       color,
       fields: [
@@ -41,12 +41,39 @@ function buildSlackAttachments({ status, color, github }) {
           value: event,
           short: true,
         },
+        {
+          title: 'Author',
+          value: actor,
+          short: true,
+        },
       ],
       footer_icon: 'https://github.githubassets.com/favicon.ico',
       footer: `<https://github.com/${owner}/${repo} | ${owner}/${repo}>`,
       ts: Math.floor(Date.now() / 1000),
     },
   ];
+
+  if (environment) {
+    slackAttachments[0].fields.push({
+      title: 'Environment',
+      value: environment,
+      short: true,
+    });
+  }
+
+  if (stage) {
+    slackAttachments[0].fields.push({
+      title: 'Stage',
+      value: stage,
+      short: true,
+    });
+  }
+
+  if (custom_fields) {
+    custom_fields.forEach(field => slackAttachments[0].fields.push(field));
+  }
+
+  return slackAttachments;
 }
 
 module.exports.buildSlackAttachments = buildSlackAttachments;

@@ -2,6 +2,8 @@ import { formatChannelName, buildSlackAttachments } from '../src/utils';
 import { GITHUB_PUSH_EVENT, GITHUB_PR_EVENT } from '../fixtures';
 
 describe('Utils', () => {
+  process.env.GITHUB_REPOSITORY = 'voxmedia/github-action-slack-notify-build';
+
   describe('formatChannelName', () => {
     it('strips #', () => {
       expect(formatChannelName('#app-notifications')).toBe('app-notifications');
@@ -25,6 +27,61 @@ describe('Utils', () => {
       expect(attachments[0].fields.find(a => a.title === 'Status')).toEqual({
         title: 'Status',
         value: 'STARTED',
+        short: true,
+      });
+    });
+
+    it('show author/actor', () => {
+      const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PUSH_EVENT });
+
+      expect(attachments[0].fields.find(a => a.title === 'Author')).toEqual({
+        title: 'Author',
+        value: 'TestUser',
+        short: true,
+      });
+    });
+
+    it('show environment', () => {
+      const attachments = buildSlackAttachments({
+        status: 'STARTED',
+        color: 'good',
+        github: GITHUB_PUSH_EVENT,
+        environment: 'prod',
+      });
+
+      expect(attachments[0].fields.find(a => a.title === 'Environment')).toEqual({
+        title: 'Environment',
+        value: 'prod',
+        short: true,
+      });
+    });
+
+    it('show custom fields', () => {
+      const attachments = buildSlackAttachments({
+        status: 'STARTED',
+        color: 'good',
+        github: GITHUB_PUSH_EVENT,
+        custom_fields: [{ title: 'custom', value: 'test', short: true }],
+      });
+
+      expect(attachments[0].fields.find(a => a.title === 'custom')).toEqual({
+        title: 'custom',
+        value: 'test',
+        short: true,
+      });
+    });
+
+    it('show stage', () => {
+      const attachments = buildSlackAttachments({
+        status: 'STARTED',
+        color: 'good',
+        github: GITHUB_PUSH_EVENT,
+        stage: 'test',
+      });
+
+      expect(attachments[0].fields.find(a => a.title === 'Stage')).toEqual({
+        title: 'Stage',
+        value: 'test',
         short: true,
       });
     });
