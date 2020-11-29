@@ -7,11 +7,13 @@ A [Slack bot token](https://api.slack.com/docs/token-types) is required to use t
 ## Usage
 
 ```yaml
-uses: voxmedia/github-action-slack-notify-build@v1
+uses: eladsachs/github-action-slack-notify-build
 with:
-  channel: app-alerts
+  channel: rnd-github-actions
   status: STARTED
   color: good
+  environment: ${{ github.event.inputs.env }}
+  stage: ${{ github.event.inputs.stage }}
 env:
   SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 ```
@@ -114,6 +116,27 @@ The ID of a previous Slack message to update instead of posting a new message. T
 ```yaml
 message_id: ${{ steps.<your_first_slack_step_id>.outputs.message_id }}
 ```
+
+### `environment`
+
+The environment input of the deployment. Typically passed using the `inputs` context:
+
+```yaml
+environment: ${{ github.event.inputs.env }}
+```
+
+### `stage`
+
+The stage input of the deployment. Typically passed using the `inputs` context:
+
+```yaml
+stage: ${{ github.event.inputs.stage }}
+```
+
+### `custom_fields`
+
+The additional custom fields you would like to add, you need to build it as insturcted in the [Slack fields guide](https://api.slack.com/legacy/interactive-message-field-guide#attachment_fields) and make sure it was inserted as string (```JSON.stringify(custom_fields)``` might help you with this)
+For example: ```'[{"title": "test", "value": "test", "short": true}]'```
 
 ## Outputs
 
