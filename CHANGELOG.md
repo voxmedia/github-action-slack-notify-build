@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/daleMirta/github-action-slack-notify-build/compare/v1.3.0...v1.3.1) (2020-11-30)
+
+
+### Bug Fixes
+
+* **message:** remove event field ([39c1fd3](https://github.com/daleMirta/github-action-slack-notify-build/commit/39c1fd3b0a017eb6bb667440e8ff1e929d08ad7a))
+
 # [1.3.0](https://github.com/daleMirta/github-action-slack-notify-build/compare/v1.2.0...v1.3.0) (2020-11-27)
 
 
