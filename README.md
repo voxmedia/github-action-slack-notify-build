@@ -125,6 +125,8 @@ The environment input of the deployment. Typically passed using the `inputs` con
 environment: ${{ github.event.inputs.env }}
 ```
 
+_prod / production environment will be highlighted in slack output automatically._
+
 ### `stage`
 
 The stage input of the deployment. Typically passed using the `inputs` context:
@@ -133,10 +135,12 @@ The stage input of the deployment. Typically passed using the `inputs` context:
 stage: ${{ github.event.inputs.stage }}
 ```
 
+_prod / production stage will be highlighted in slack output automatically._
+
 ### `custom_fields`
 
-The additional custom fields you would like to add, you need to build it as insturcted in the [Slack fields guide](https://api.slack.com/legacy/interactive-message-field-guide#attachment_fields) and make sure it was inserted as string (```JSON.stringify(custom_fields)``` might help you with this)
-For example: ```'[{"title": "test", "value": "test", "short": true}]'```
+The additional custom fields you would like to add, you need to build it as insturcted in the [Slack fields guide](https://api.slack.com/legacy/interactive-message-field-guide#attachment_fields) and make sure it was inserted as string (`JSON.stringify(custom_fields)` might help you with this)
+For example: `'[{"title": "test", "value": "test", "short": true}]'`
 
 ## Outputs
 
