@@ -52,16 +52,6 @@ describe('Utils', () => {
         });
       });
 
-      it('shows the event name', () => {
-        const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PUSH_EVENT });
-
-        expect(attachments[0].fields.find(a => a.title === 'Event')).toEqual({
-          title: 'Event',
-          value: 'push',
-          short: true,
-        });
-      });
-
       it('links to the branch', () => {
         const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PUSH_EVENT });
 
@@ -95,16 +85,6 @@ describe('Utils', () => {
         expect(attachments[0].fields.find(a => a.title === 'Action')).toEqual({
           title: 'Action',
           value: `<https://github.com/voxmedia/github-action-slack-notify-build/commit/xyz678/checks | CI>`,
-          short: true,
-        });
-      });
-
-      it('shows the event name', () => {
-        const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PR_EVENT });
-
-        expect(attachments[0].fields.find(a => a.title === 'Event')).toEqual({
-          title: 'Event',
-          value: 'pull_request',
           short: true,
         });
       });
