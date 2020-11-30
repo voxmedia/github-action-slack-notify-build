@@ -37,3 +37,16 @@ export const GITHUB_PR_EVENT = {
     sha: 'abc123',
   },
 };
+
+export const GITHUB_WORKFLOW_EVENT = {
+  context: {
+    payload: {
+      repository,
+    },
+    actor: 'Codertocat',
+    ref: 'refs/heads/my-branch',
+    workflow: 'CI',
+    eventName: 'workflow',
+    sha: null,
+  },
+};
