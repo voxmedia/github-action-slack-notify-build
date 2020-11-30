@@ -1,5 +1,5 @@
 import { formatChannelName, buildSlackAttachments } from '../src/utils';
-import { GITHUB_PUSH_EVENT, GITHUB_PR_EVENT } from '../fixtures';
+import { GITHUB_PUSH_EVENT, GITHUB_PR_EVENT, GITHUB_WORKFLOW_EVENT } from '../fixtures';
 
 describe('Utils', () => {
   process.env.GITHUB_REPOSITORY = 'voxmedia/github-action-slack-notify-build';
@@ -104,6 +104,43 @@ describe('Utils', () => {
           status: 'STARTED',
           color: 'good',
           github: GITHUB_PR_EVENT,
+          message: 'message',
+        });
+
+        expect(attachments[0].fields.find(a => a.title === 'Message')).toEqual({
+          title: 'Message',
+          value: 'message',
+          short: false,
+        });
+      });
+    });
+
+    describe('for manual workflow events', () => {
+      it('links to the action workflow', () => {
+        const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_WORKFLOW_EVENT });
+
+        expect(attachments[0].fields.find(a => a.title === 'Action')).toEqual({
+          title: 'Action',
+          value: 'CI',
+          short: true,
+        });
+      });
+
+      it('links to the branch', () => {
+        const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_WORKFLOW_EVENT });
+
+        expect(attachments[0].fields.find(a => a.title === 'Branch')).toEqual({
+          title: 'Branch',
+          value: 'my-branch',
+          short: true,
+        });
+      });
+
+      it('show message', () => {
+        const attachments = buildSlackAttachments({
+          status: 'STARTED',
+          color: 'good',
+          github: GITHUB_WORKFLOW_EVENT,
           message: 'message',
         });
 
