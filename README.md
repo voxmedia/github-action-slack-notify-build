@@ -1,13 +1,13 @@
 # Slack Notify Build
 
-This action prints your GitHub Action build status to Slack. It takes an opinionated approach by showing attachments for metadata like branch, pull request, and event. This action allows [existing messages to be updated](#updating-an-existing-message) to reduce unwanted noise in your Slack channel. Heavily-inspired by [Post Slack messages](https://github.com/marketplace/actions/post-slack-message).
+This action prints your GitHub Action build status to Slack. It takes an opinionated approach by showing attachments for metadata like branch, pull request, and event. This action allows [existing messages to be updated](#updating-an-existing-message) to reduce unwanted noise in your Slack channel. Heavily-inspired by [Slack Notify Build](https://github.com/marketplace/actions/slack-notify-build).
 
 A [Slack bot token](https://api.slack.com/docs/token-types) is required to use this action, and the associated app must be granted permission to post in the channel, private group or DM you specify.
 
 ## Usage
 
 ```yaml
-uses: voxmedia/github-action-slack-notify-build@v1
+uses: mirta-com/github-action-slack-notify-build@v1
 with:
   channel: app-alerts
   status: STARTED
@@ -38,7 +38,7 @@ Note: You must assign a step `id` to the first Slack notification step in order 
   id: slack # IMPORTANT: reference this step ID value in future Slack steps
   env:
     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-  uses: voxmedia/github-action-slack-notify-build@v1
+  uses: mirta-com/github-action-slack-notify-build@v1
   with:
     channel: app-alerts
     status: STARTING
@@ -50,7 +50,7 @@ Note: You must assign a step `id` to the first Slack notification step in order 
   if: success()
   env:
     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-  uses: voxmedia/github-action-slack-notify-build@v1
+  uses: mirta-com/github-action-slack-notify-build@v1
   with:
     # Updates existing message from the first step
     message_id: ${{ steps.slack.outputs.message_id }}
@@ -70,7 +70,7 @@ You can use the `success()` and `failure()` conditional checks within your workf
   if: success()
   env:
     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-  uses: voxmedia/github-action-slack-notify-build@v1
+  uses: mirta-com/github-action-slack-notify-build@v1
   with:
     channel: app-alerts
     status: SUCCESS
@@ -80,7 +80,7 @@ You can use the `success()` and `failure()` conditional checks within your workf
   if: failure()
   env:
     SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-  uses: voxmedia/github-action-slack-notify-build@v1
+  uses: mirta-com/github-action-slack-notify-build@v1
   with:
     channel: app-alerts
     status: FAILED
@@ -114,6 +114,10 @@ The ID of a previous Slack message to update instead of posting a new message. T
 ```yaml
 message_id: ${{ steps.<your_first_slack_step_id>.outputs.message_id }}
 ```
+
+### `message`
+
+A not mandatory custom message.
 
 ## Outputs
 
