@@ -2,7 +2,6 @@ name: GitHub Action Slack Notify CI
 
 on:
   - push
-  - pull_request
 
 jobs:
   build:
@@ -22,9 +21,61 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         uses: ./
         with:
-          channel_id: CB9QT2NNR
+          channel: action-workflows
           status: STARTED
           color: warning
+          message: PUSH
+      - name: Get yarn cache
+        id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: yarn install and test
+        run: |
+          yarn
+          yarn test
+        env:
+          CI: true
+      - name: yarn build
+        run: yarn build
+      - name: Notify slack success
+        if: env.SLACK_BOT_TOKEN
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: ./
+        with:
+          message_id: ${{ steps.slack.outputs.message_id }}
+          channel: action-workflows
+          status: SUCCESS
+          color: good
+          message: PUSH
+
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js v12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Notify slack
+        # Don't attempt to send Slack notifications on fork PRs which don't have access to secrets
+        if: env.SLACK_BOT_TOKEN
+        id: slack
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+        uses: ./
+        with:
+          channel: action-workflows
+          status: STARTED
+          color: warning
+          message: DEPLOY
       - name: Get yarn cache
         id: yarn-cache
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -57,6 +108,7 @@ jobs:
         uses: ./
         with:
           message_id: ${{ steps.slack.outputs.message_id }}
-          channel_id: CB9QT2NNR
+          channel: action-workflows
           status: SUCCESS
           color: good
+          message: DEPLOY
