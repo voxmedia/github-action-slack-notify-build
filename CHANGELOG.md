@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/mirta-com/github-action-slack-notify-build/compare/v1.3.1...v1.3.2) (2020-11-30)
+
+
+### Bug Fixes
+
+* **event:** handle workflow events ([33f15d6](https://github.com/mirta-com/github-action-slack-notify-build/commit/33f15d6b2748f74d7ec06495203dbbf95ceadacc))
+
 ## [1.3.1](https://github.com/daleMirta/github-action-slack-notify-build/compare/v1.3.0...v1.3.1) (2020-11-30)
 
 

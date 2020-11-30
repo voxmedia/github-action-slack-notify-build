@@ -10018,7 +10018,7 @@ function buildSlackAttachments({ status, color, github, message }) {
         }
       : {
           title: 'Branch',
-          value: `<https://github.com/${owner}/${repo}/commit/${sha} | ${branch}>`,
+          value: sha ? `<https://github.com/${owner}/${repo}/commit/${sha} | ${branch}>` : branch,
           short: true,
         };
 
@@ -10027,7 +10027,7 @@ function buildSlackAttachments({ status, color, github, message }) {
     fields: [
       {
         title: 'Action',
-        value: `<https://github.com/${owner}/${repo}/commit/${sha}/checks | ${workflow}>`,
+        value: sha ? `<https://github.com/${owner}/${repo}/commit/${sha}/checks | ${workflow}>` : workflow,
         short: true,
       },
       {
