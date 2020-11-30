@@ -46,12 +46,27 @@ describe('Utils', () => {
         status: 'STARTED',
         color: 'good',
         github: GITHUB_PUSH_EVENT,
+        environment: 'test',
+      });
+
+      expect(attachments[0].fields.find(a => a.title === 'Environment')).toEqual({
+        title: 'Environment',
+        value: 'test',
+        short: true,
+      });
+    });
+
+    it('highlight prod environment', () => {
+      const attachments = buildSlackAttachments({
+        status: 'STARTED',
+        color: 'good',
+        github: GITHUB_PUSH_EVENT,
         environment: 'prod',
       });
 
       expect(attachments[0].fields.find(a => a.title === 'Environment')).toEqual({
         title: 'Environment',
-        value: 'prod',
+        value: '`prod`',
         short: true,
       });
     });

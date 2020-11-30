@@ -10040,6 +10040,7 @@ function buildSlackAttachments({ status, color, github, environment, stage, cust
 
   let slackAttachments = [
     {
+      "mrkdwn_in": ["fields"],
       color,
       fields: [
         {
@@ -10071,6 +10072,7 @@ function buildSlackAttachments({ status, color, github, environment, stage, cust
   ];
 
   if (environment) {
+    environment = highlight_prod(environment)
     slackAttachments[0].fields.push({
       title: 'Environment',
       value: environment,
@@ -10079,6 +10081,7 @@ function buildSlackAttachments({ status, color, github, environment, stage, cust
   }
 
   if (stage) {
+    stage = highlight_prod(stage)
     slackAttachments[0].fields.push({
       title: 'Stage',
       value: stage,
@@ -10097,6 +10100,13 @@ module.exports.buildSlackAttachments = buildSlackAttachments;
 
 function formatChannelName(channel) {
   return channel.replace(/[#@]/g, '');
+}
+
+function highlight_prod(text) {
+  if (['prod', 'production'].includes(text)) {
+    text = `\`${text}\``
+  }
+  return text;
 }
 
 module.exports.formatChannelName = formatChannelName;
