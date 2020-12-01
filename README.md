@@ -119,6 +119,10 @@ message_id: ${{ steps.<your_first_slack_step_id>.outputs.message_id }}
 
 A not mandatory custom message.
 
+### `event_show`
+
+True to show the event. Default false.
+
 ## Outputs
 
 ### `message_id`

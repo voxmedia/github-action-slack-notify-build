@@ -20,6 +20,10 @@ inputs:
   message:
     description: 'A custom message to show.'
     required: false
+  event_show:
+    description: 'If to show the event field.'
+    required: false
+    default: false
   message_id:
     description: 'The ID of the existing Slack message to update.'
     required: false
