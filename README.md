@@ -119,7 +119,7 @@ message_id: ${{ steps.<your_first_slack_step_id>.outputs.message_id }}
 
 ### `environment`
 
-The environment input of the deployment. Typically passed using the `inputs` context:
+The environment input of the deployment. It passed using the `inputs` context:
 
 ```yaml
 environment: ${{ github.event.inputs.env }}
@@ -129,13 +129,21 @@ _prod / production environment will be highlighted in slack output automatically
 
 ### `stage`
 
-The stage input of the deployment. Typically passed using the `inputs` context:
+The stage input of the deployment. It passed using the `inputs` context:
 
 ```yaml
 stage: ${{ github.event.inputs.stage }}
 ```
 
 _prod / production stage will be highlighted in slack output automatically._
+
+### `last_commit`
+
+The last commit of the selected branch. It can be enabled by passing it in the `inputs` context:
+
+```yaml
+last_commit: true
+```
 
 ### `custom_fields`
 

@@ -26,6 +26,9 @@ inputs:
   stage:
     description: 'The stage of the deployment.'
     required: false
+  last_commit:
+    description: 'Enable last commit message field.'
+    required: false
   custom_fields:
     description: 'Custom fields to add to the slack attachment.'
     required: false

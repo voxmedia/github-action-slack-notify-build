@@ -1075,6 +1075,7 @@ const { buildSlackAttachments, formatChannelName } = __webpack_require__(543);
     const environment = core.getInput('environment');
     const stage = core.getInput('stage');
     let custom_fields = core.getInput('custom_fields');
+    const last_commit = core.getInput('last_commit');
     const token = process.env.SLACK_BOT_TOKEN;
     const slack = new WebClient(token);
 
@@ -1096,7 +1097,8 @@ const { buildSlackAttachments, formatChannelName } = __webpack_require__(543);
       }
     }
 
-    const attachments = buildSlackAttachments({ status, color, github, environment, stage, custom_fields });
+    const attachments = buildSlackAttachments({ status, color, github, environment, stage, custom_fields, last_commit });
+
     const channelId = core.getInput('channel_id') || (await lookUpChannelId({ slack, channel }));
 
     if (!channelId) {
@@ -10017,12 +10019,11 @@ module.exports = resolveCommand;
 
 const { context } = __webpack_require__(469);
 
-function buildSlackAttachments({ status, color, github, environment, stage, custom_fields }) {
+function buildSlackAttachments({ status, color, github, environment, stage, custom_fields, last_commit }) {
   const { payload, ref, workflow, eventName, actor } = github.context;
   const { owner, repo } = context.repo;
   const event = eventName;
   const branch = event === 'pull_request' ? payload.pull_request.head.ref : ref.replace('refs/heads/', '');
-
   const sha = event === 'pull_request' ? payload.pull_request.head.sha : github.context.sha;
 
   const referenceLink =
@@ -10030,39 +10031,39 @@ function buildSlackAttachments({ status, color, github, environment, stage, cust
       ? {
           title: 'Pull Request',
           value: `<${payload.pull_request.html_url} | ${payload.pull_request.title}>`,
-          short: true,
+          short: true
         }
       : {
           title: 'Branch',
           value: `<https://github.com/${owner}/${repo}/commit/${sha} | ${branch}>`,
-          short: true,
+          short: true
         };
 
   let slackAttachments = [
     {
-      "mrkdwn_in": ["fields"],
+      mrkdwn_in: ['fields'],
       color,
       fields: [
         {
           title: 'Action',
           value: `<https://github.com/${owner}/${repo}/commit/${sha}/checks | ${workflow}>`,
-          short: true,
+          short: true
         },
         {
           title: 'Status',
           value: status,
-          short: true,
+          short: true
         },
         referenceLink,
         {
           title: 'Event',
           value: event,
-          short: true,
+          short: true
         },
         {
           title: 'Author',
           value: actor,
-          short: true,
+          short: true
         },
       ],
       footer_icon: 'https://github.githubassets.com/favicon.ico',
@@ -10072,20 +10073,28 @@ function buildSlackAttachments({ status, color, github, environment, stage, cust
   ];
 
   if (environment) {
-    environment = highlight_prod(environment)
+    environment = highlight_prod(environment);
     slackAttachments[0].fields.push({
       title: 'Environment',
       value: environment,
-      short: true,
+      short: true
     });
   }
 
   if (stage) {
-    stage = highlight_prod(stage)
+    stage = highlight_prod(stage);
     slackAttachments[0].fields.push({
       title: 'Stage',
       value: stage,
       short: true,
+    });
+  }
+
+  if (last_commit === 'true') {
+    slackAttachments[0].fields.push({
+      title: 'Last Commit Message',
+      value: get_last_commit_message(),
+      short: false
     });
   }
 
@@ -10104,9 +10113,21 @@ function formatChannelName(channel) {
 
 function highlight_prod(text) {
   if (['prod', 'production'].includes(text)) {
-    text = `\`${text}\``
+    text = `\`${text}\``;
   }
+
   return text;
+}
+
+async function get_last_commit_message() {
+  const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
+  const {data: message} = await octokit.git.getCommit({
+    owner: owner,
+    repo: repo,
+    commit_sha: sha
+  });
+
+  return message;
 }
 
 module.exports.formatChannelName = formatChannelName;
