@@ -1,4 +1,5 @@
 const { context } = require('@actions/github');
+const { Octokit } = require('@octokit/rest');
 
 function buildSlackAttachments({ status, color, github, environment, stage, custom_fields, last_commit }) {
   const { payload, ref, workflow, eventName, actor } = github.context;
@@ -74,7 +75,7 @@ function buildSlackAttachments({ status, color, github, environment, stage, cust
   if (last_commit === 'true') {
     slackAttachments[0].fields.push({
       title: 'Last Commit Message',
-      value: get_last_commit_message(),
+      value: get_last_commit_message(owner, repo, sha),
       short: false,
     });
   }
@@ -100,15 +101,15 @@ function highlight_prod(text) {
   return text;
 }
 
-async function get_last_commit_message() {
-  const octokit = github.getOctokit(process.env.GITHUB_TOKEN);
-  const { data: message } = await octokit.git.getCommit({
-    owner: owner,
-    repo: repo,
-    commit_sha: sha,
+async function get_last_commit_message(repo, owner, commit_sha) {
+  const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
+  const { data } = await octokit.git.getCommit({
+    owner,
+    repo,
+    commit_sha,
   });
 
-  return message;
+  return data.message ? data.message : '---';
 }
 
 module.exports.formatChannelName = formatChannelName;
