@@ -1474,7 +1474,15 @@ const { buildSlackAttachments, formatChannelName } = __webpack_require__(543);
       }
     }
 
-    const attachments = buildSlackAttachments({status, color, github, environment, stage, custom_fields, last_commit});
+    const attachments = buildSlackAttachments({
+      status,
+      color,
+      github,
+      environment,
+      stage,
+      custom_fields,
+      last_commit,
+    });
 
     const channelId = core.getInput('channel_id') || (await lookUpChannelId({ slack, channel }));
 
@@ -12604,8 +12612,8 @@ function highlight_prod(text) {
   return text;
 }
 
-async function get_last_commit_message(repo, owner, commit_sha) {
-  const octokit = new Octokit({auth: process.env.GITHUB_TOKEN});
+async function get_last_commit_message(owner, repo, commit_sha) {
+  const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
   const { data } = await octokit.git.getCommit({
     owner,
     repo,

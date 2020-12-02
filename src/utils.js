@@ -101,7 +101,7 @@ function highlight_prod(text) {
   return text;
 }
 
-async function get_last_commit_message(repo, owner, commit_sha) {
+async function get_last_commit_message(owner, repo, commit_sha) {
   const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
   const { data } = await octokit.git.getCommit({
     owner,
