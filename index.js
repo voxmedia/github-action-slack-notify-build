@@ -34,7 +34,7 @@ const { buildSlackAttachments, formatChannelName } = require('./src/utils');
       }
     }
 
-    const attachments = buildSlackAttachments({
+    const attachments = await buildSlackAttachments({
       status,
       color,
       github,
