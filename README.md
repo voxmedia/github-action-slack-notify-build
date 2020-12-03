@@ -14,8 +14,10 @@ with:
   color: good
   environment: ${{ github.event.inputs.env }}
   stage: ${{ github.event.inputs.stage }}
+  last_commit: true
 env:
   SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 The Slack notification leverages attachments to group important information together and provide valuable links:
@@ -144,6 +146,8 @@ The last commit of the selected branch. It can be enabled by passing it in the `
 ```yaml
 last_commit: true
 ```
+
+**make sure to add `GITHUB_TOKEN` secret!**
 
 ### `custom_fields`
 
