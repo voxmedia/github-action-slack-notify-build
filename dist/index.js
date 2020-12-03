@@ -12585,7 +12585,7 @@ async function buildSlackAttachments({ status, color, github, environment, stage
 
   if (last_commit === 'true') {
     await get_last_commit_message(owner, repo, sha).then(response => {
-      let last_commit_message = response.data.message ? response.data : '---';
+      let last_commit_message = response.data.message;
       slackAttachments[0].fields.push({
         title: 'Last Commit Message',
         value: last_commit_message,
