@@ -1,4 +1,4 @@
-const { context } = require('@actions/github-script');
+const { context } = require('@actions/github');
 
 function buildSlackAttachments({ status, color, github }) {
   const { payload, ref, workflow, eventName, job, runId } = github.context;
