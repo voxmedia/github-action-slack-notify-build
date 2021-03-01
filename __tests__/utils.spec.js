@@ -44,7 +44,7 @@ describe('Utils', () => {
         const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PUSH_EVENT });
 
         expect(attachments[0].fields.find(a => a.title === 'Job')).toEqual({
-          title: 'Workflow',
+          title: 'Job',
           value: `<https://github.com/voxmedia/github-action-slack-notify-build/actions/runs/12345 | build and push>`,
           short: true,
         });
