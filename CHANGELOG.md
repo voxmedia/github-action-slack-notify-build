@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/voxmedia/github-action-slack-notify-build/compare/v1.3.0...v1.3.1) (2021-03-01)
+
+
+### Bug Fixes
+
+* removing job field ([4bd2941](https://github.com/voxmedia/github-action-slack-notify-build/commit/4bd29412ee530da06c25cd5ff9f331ba32e63f9a))
+
 # [1.3.0](https://github.com/voxmedia/github-action-slack-notify-build/compare/v1.2.0...v1.3.0) (2021-03-01)
 
 
