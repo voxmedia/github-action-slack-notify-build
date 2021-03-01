@@ -33,9 +33,19 @@ describe('Utils', () => {
       it('links to the action workflow', () => {
         const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PUSH_EVENT });
 
-        expect(attachments[0].fields.find(a => a.title === 'Action')).toEqual({
-          title: 'Action',
-          value: `<https://github.com/voxmedia/github-action-slack-notify-build/commit/abc123/checks | CI>`,
+        expect(attachments[0].fields.find(a => a.title === 'Workflow')).toEqual({
+          title: 'Workflow',
+          value: `<https://github.com/voxmedia/github-action-slack-notify-build/actions/runs/12345 | CI>`,
+          short: true,
+        });
+      });
+
+      it('links to the action job', () => {
+        const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PUSH_EVENT });
+
+        expect(attachments[0].fields.find(a => a.title === 'Job')).toEqual({
+          title: 'Job',
+          value: `<https://github.com/voxmedia/github-action-slack-notify-build/actions/runs/12345 | build and push>`,
           short: true,
         });
       });
@@ -65,9 +75,9 @@ describe('Utils', () => {
       it('links to the action workflow', () => {
         const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PR_EVENT });
 
-        expect(attachments[0].fields.find(a => a.title === 'Action')).toEqual({
-          title: 'Action',
-          value: `<https://github.com/voxmedia/github-action-slack-notify-build/commit/xyz678/checks | CI>`,
+        expect(attachments[0].fields.find(a => a.title === 'Workflow')).toEqual({
+          title: 'Workflow',
+          value: `<https://github.com/voxmedia/github-action-slack-notify-build/actions/runs/12345 | CI>`,
           short: true,
         });
       });
