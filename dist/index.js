@@ -10002,7 +10002,7 @@ module.exports = resolveCommand;
 const { context } = __webpack_require__(469);
 
 function buildSlackAttachments({ status, color, github }) {
-  const { payload, ref, workflow, eventName, job, runId } = github.context;
+  const { payload, ref, workflow, eventName } = github.context;
   const { owner, repo } = context.repo;
   const event = eventName;
   const branch = event === 'pull_request' ? payload.pull_request.head.ref : ref.replace('refs/heads/', '');
@@ -10027,13 +10027,8 @@ function buildSlackAttachments({ status, color, github }) {
       color,
       fields: [
         {
-          title: 'Workflow',
-          value: `<https://github.com/${owner}/${repo}/actions/runs/${runId} | ${workflow}>`,
-          short: true,
-        },
-        {
-          title: 'Job',
-          value: `<https://github.com/${owner}/${repo}/actions/runs/${runId} | ${job}>`,
+          title: 'Action',
+          value: `<https://github.com/${owner}/${repo}/commit/${sha}/checks | ${workflow}>`,
           short: true,
         },
         {
