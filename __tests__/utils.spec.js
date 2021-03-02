@@ -1,6 +1,7 @@
 import { formatChannelName, buildSlackAttachments } from '../src/utils';
 import { GITHUB_PUSH_EVENT, GITHUB_PR_EVENT } from '../fixtures';
 const runId = parseInt(process.env.GITHUB_RUN_ID, 10);
+const job = process.env.GITHUB_JOB;
 
 describe('Utils', () => {
   describe('formatChannelName', () => {
@@ -46,7 +47,7 @@ describe('Utils', () => {
 
         expect(attachments[0].fields.find(a => a.title === 'Job')).toEqual({
           title: 'Job',
-          value: `<https://github.com/voxmedia/github-action-slack-notify-build/actions/runs/${runId} | build and push>`,
+          value: `<https://github.com/voxmedia/github-action-slack-notify-build/actions/runs/${runId} | ${job}>`,
           short: true,
         });
       });
