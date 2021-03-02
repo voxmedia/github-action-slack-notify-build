@@ -35,7 +35,7 @@ describe('Utils', () => {
 
         expect(attachments[0].fields.find(a => a.title === 'Workflow')).toEqual({
           title: 'Workflow',
-          value: `<https://github.com/voxmedia/github-action-slack-notify-build/actions/runs/12345 | CI>`,
+          value: `<https://github.com/voxmedia/github-action-slack-notify-build/actions/runs/${process.env.GITHUB_JOB} | CI>`,
           short: true,
         });
       });
@@ -45,7 +45,7 @@ describe('Utils', () => {
 
         expect(attachments[0].fields.find(a => a.title === 'Job')).toEqual({
           title: 'Job',
-          value: `<https://github.com/voxmedia/github-action-slack-notify-build/actions/runs/12345 | build and push>`,
+          value: `<https://github.com/voxmedia/github-action-slack-notify-build/actions/runs/${process.env.GITHUB_JOB} | build and push>`,
           short: true,
         });
       });
@@ -77,7 +77,7 @@ describe('Utils', () => {
 
         expect(attachments[0].fields.find(a => a.title === 'Workflow')).toEqual({
           title: 'Workflow',
-          value: `<https://github.com/voxmedia/github-action-slack-notify-build/actions/runs/12345 | CI>`,
+          value: `<https://github.com/voxmedia/github-action-slack-notify-build/actions/runs/${process.env.GITHUB_JOB} | CI>`,
           short: true,
         });
       });

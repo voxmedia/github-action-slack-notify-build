@@ -36,6 +36,6 @@ export const GITHUB_PR_EVENT = {
     eventName: 'pull_request',
     sha: 'abc123',
     job: 'build and push',
-    runId: 12345,
+    runId: process.env.GITHUB_JOB,
   },
 };
