@@ -1,5 +1,6 @@
 import { formatChannelName, buildSlackAttachments } from '../src/utils';
 import { GITHUB_PUSH_EVENT, GITHUB_PR_EVENT } from '../fixtures';
+const runId = parseInt(process.env.GITHUB_RUN_ID, 10);
 
 describe('Utils', () => {
   describe('formatChannelName', () => {
@@ -35,7 +36,7 @@ describe('Utils', () => {
 
         expect(attachments[0].fields.find(a => a.title === 'Workflow')).toEqual({
           title: 'Workflow',
-          value: `<https://github.com/voxmedia/github-action-slack-notify-build/actions/runs/${process.env.GITHUB_JOB} | CI>`,
+          value: `<https://github.com/voxmedia/github-action-slack-notify-build/actions/runs/${runId} | CI>`,
           short: true,
         });
       });
@@ -45,7 +46,7 @@ describe('Utils', () => {
 
         expect(attachments[0].fields.find(a => a.title === 'Job')).toEqual({
           title: 'Job',
-          value: `<https://github.com/voxmedia/github-action-slack-notify-build/actions/runs/${process.env.GITHUB_JOB} | build and push>`,
+          value: `<https://github.com/voxmedia/github-action-slack-notify-build/actions/runs/${runId} | build and push>`,
           short: true,
         });
       });
@@ -77,7 +78,7 @@ describe('Utils', () => {
 
         expect(attachments[0].fields.find(a => a.title === 'Workflow')).toEqual({
           title: 'Workflow',
-          value: `<https://github.com/voxmedia/github-action-slack-notify-build/actions/runs/${process.env.GITHUB_JOB} | CI>`,
+          value: `<https://github.com/voxmedia/github-action-slack-notify-build/actions/runs/${runId} | CI>`,
           short: true,
         });
       });
