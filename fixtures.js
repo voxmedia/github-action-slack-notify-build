@@ -14,6 +14,8 @@ export const GITHUB_PUSH_EVENT = {
     workflow: 'CI',
     eventName: 'push',
     sha: 'abc123',
+    job: 'build and push',
+    runId: 12345,
   },
 };
 
@@ -33,5 +35,7 @@ export const GITHUB_PR_EVENT = {
     workflow: 'CI',
     eventName: 'pull_request',
     sha: 'abc123',
+    job: 'build and push',
+    runId: 12345,
   },
 };
