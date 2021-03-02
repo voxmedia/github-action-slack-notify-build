@@ -1,3 +1,19 @@
+# [1.4.0](https://github.com/voxmedia/github-action-slack-notify-build/compare/v1.3.1...v1.4.0) (2021-03-02)
+
+
+### Bug Fixes
+
+* broken link ([60248a1](https://github.com/voxmedia/github-action-slack-notify-build/commit/60248a188bc8c95bbd95cbba332fa40e0b6ef787))
+* tests ([d906713](https://github.com/voxmedia/github-action-slack-notify-build/commit/d906713e9a594fb9a88233853008d82a3879d724))
+* tests ([7a7ca58](https://github.com/voxmedia/github-action-slack-notify-build/commit/7a7ca58c85ed62bca087f54a171e0b39e7b5e16a))
+* tests ([3ce992c](https://github.com/voxmedia/github-action-slack-notify-build/commit/3ce992c6ce94fb3133f57dcea615898481d5be40))
+* tests ([0476331](https://github.com/voxmedia/github-action-slack-notify-build/commit/0476331b3622fb4d79b39508e2305864ffcb06c7))
+
+
+### Features
+
+* using github env ([f233440](https://github.com/voxmedia/github-action-slack-notify-build/commit/f233440956d44857156c07a9d035c719c211ed08))
+
 ## [1.3.1](https://github.com/voxmedia/github-action-slack-notify-build/compare/v1.3.0...v1.3.1) (2021-03-01)
 
 
