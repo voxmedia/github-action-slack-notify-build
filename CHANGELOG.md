@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/voxmedia/github-action-slack-notify-build/compare/v1.4.0...v1.5.0) (2021-03-05)
+
+
+### Features
+
+* putting repo name more prominently ([373da97](https://github.com/voxmedia/github-action-slack-notify-build/commit/373da97827332b19e753c84d1e5b7937dbe0fbfa))
+
 # [1.4.0](https://github.com/voxmedia/github-action-slack-notify-build/compare/v1.3.1...v1.4.0) (2021-03-02)
 
 
