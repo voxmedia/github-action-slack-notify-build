@@ -3,6 +3,8 @@ import { GITHUB_PUSH_EVENT, GITHUB_PR_EVENT } from '../fixtures';
 const runId = parseInt(process.env.GITHUB_RUN_ID, 10);
 
 describe('Utils', () => {
+  process.env.GITHUB_REPOSITORY = 'voxmedia/github-action-slack-notify-build';
+
   describe('formatChannelName', () => {
     it('strips #', () => {
       expect(formatChannelName('#app-notifications')).toBe('app-notifications');
@@ -26,6 +28,16 @@ describe('Utils', () => {
       expect(attachments[0].fields.find(a => a.title === 'Status')).toEqual({
         title: 'Status',
         value: 'STARTED',
+        short: true,
+      });
+    });
+
+    it('show author/actor', () => {
+      const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PUSH_EVENT });
+
+      expect(attachments[0].fields.find(a => a.title === 'Author')).toEqual({
+        title: 'Author',
+        value: 'Codertocat',
         short: true,
       });
     });

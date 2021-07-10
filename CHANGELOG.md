@@ -1,3 +1,8 @@
+# Unreleased
+
+- Fetches the Actor ("The name of the person or app that initiated the workflow") and sets that as an Author field in the
+  Slack attachment.
+  
 # [1.5.0](https://github.com/voxmedia/github-action-slack-notify-build/compare/v1.4.0...v1.5.0) (2021-03-05)
 
 
