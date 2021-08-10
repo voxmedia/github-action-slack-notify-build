@@ -13,7 +13,7 @@ with:
   status: STARTED
   color: good
 env:
-  SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+  SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
 ```
 
 The Slack notification leverages attachments to group important information together and provide valuable links:
@@ -37,7 +37,7 @@ Note: You must assign a step `id` to the first Slack notification step in order 
   if: success()
   id: slack # IMPORTANT: reference this step ID value in future Slack steps
   env:
-    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+    SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
   uses: voxmedia/github-action-slack-notify-build@v1
   with:
     channel: app-alerts
@@ -49,7 +49,7 @@ Note: You must assign a step `id` to the first Slack notification step in order 
 - name: Notify slack success
   if: success()
   env:
-    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+    SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
   uses: voxmedia/github-action-slack-notify-build@v1
   with:
     # Updates existing message from the first step
@@ -69,7 +69,7 @@ You can use the `success()` and `failure()` conditional checks within your workf
 - name: Notify slack success
   if: success()
   env:
-    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+    SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
   uses: voxmedia/github-action-slack-notify-build@v1
   with:
     channel: app-alerts
@@ -79,7 +79,7 @@ You can use the `success()` and `failure()` conditional checks within your workf
 - name: Notify slack fail
   if: failure()
   env:
-    SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+    SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
   uses: voxmedia/github-action-slack-notify-build@v1
   with:
     channel: app-alerts
@@ -105,7 +105,7 @@ The ID of the channel to post the message to. **Required** if no `channel` is pr
 
 ### `color`
 
-The color to use for the notification. Can be a hex value or any [valid Slack color level](https://api.slack.com/docs/message-attachments#color) (e.g. `good`). Defaults to `#cccccc`.
+The color to use for the notification. Can be a hex value or any [valid Slack color level](https://api.slack.com/reference/messaging/attachments#fields) (e.g. `good`). Defaults to `#cccccc`.
 
 ### `message_id`
 

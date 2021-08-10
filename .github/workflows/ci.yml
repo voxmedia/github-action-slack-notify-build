@@ -40,6 +40,18 @@ jobs:
           yarn test
         env:
           CI: true
+      - name: yarn build
+        run: yarn build
+      - name: release
+        if: ${{ endsWith(github.ref, '/main') }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release
+      - name: update v1 tag
+        if: ${{ endsWith(github.ref, '/main') }}
+        run: 'git push -f https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git HEAD:refs/heads/v1'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Notify slack success
         if: env.SLACK_BOT_TOKEN
         env:

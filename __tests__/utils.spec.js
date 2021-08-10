@@ -1,5 +1,6 @@
 import { formatChannelName, buildSlackAttachments } from '../src/utils';
 import { GITHUB_PUSH_EVENT, GITHUB_PR_EVENT } from '../fixtures';
+const runId = parseInt(process.env.GITHUB_RUN_ID, 10);
 
 describe('Utils', () => {
   process.env.GITHUB_REPOSITORY = 'voxmedia/github-action-slack-notify-build';
@@ -43,9 +44,19 @@ describe('Utils', () => {
       it('links to the action workflow', () => {
         const { attachments } = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PUSH_EVENT });
 
-        expect(attachments[0].fields.find(a => a.title === 'Action')).toEqual({
-          title: 'Action',
-          value: `<https://github.com/voxmedia/github-action-slack-notify-build/commit/abc123/checks | CI>`,
+        expect(attachments[0].fields.find(a => a.title === 'Workflow')).toEqual({
+          title: 'Workflow',
+          value: `<https://github.com/voxmedia/github-action-slack-notify-build/actions/runs/${runId} | CI>`,
+          short: true,
+        });
+      });
+
+      it('links to the action repo', () => {
+        const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PUSH_EVENT });
+
+        expect(attachments[0].fields.find(a => a.title === 'Repo')).toEqual({
+          title: 'Repo',
+          value: `<https://github.com/voxmedia/github-action-slack-notify-build | voxmedia/github-action-slack-notify-build>`,
           short: true,
         });
       });
@@ -75,9 +86,9 @@ describe('Utils', () => {
       it('links to the action workflow', () => {
         const { attachments } = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PR_EVENT });
 
-        expect(attachments[0].fields.find(a => a.title === 'Action')).toEqual({
-          title: 'Action',
-          value: `<https://github.com/voxmedia/github-action-slack-notify-build/commit/xyz678/checks | CI>`,
+        expect(attachments[0].fields.find(a => a.title === 'Workflow')).toEqual({
+          title: 'Workflow',
+          value: `<https://github.com/voxmedia/github-action-slack-notify-build/actions/runs/${runId} | CI>`,
           short: true,
         });
       });
