@@ -5,137 +5,137 @@ on:
       types: [completed]
       branches: [main, test]
 
-  jobs:
-    build-test:
-      runs-on: ubuntu-latest
-      if: |
-        github.event.workflow_run.head_branch == 'test' &&
-        github.event.workflow_run.conclusion == 'success'
-      steps:
-        - uses: actions/checkout@v1
-        - name: Use Node.js v12.x
-          uses: actions/setup-node@v1
-          with:
-            node-version: 12
-        - name: Notify slack
-          # Don't attempt to send Slack notifications on fork PRs which don't have access to secrets
-          id: slack
-          env:
-            SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
-          uses: ./
-          with:
-            channel: slack-test
-            status: STARTED
-            color: warning
-        - name: Get yarn cache
-          id: yarn-cache
-          run: echo "::set-output name=dir::$(yarn cache dir)"
-        - uses: actions/cache@v1
-          with:
-            path: ${{ steps.yarn-cache.outputs.dir }}
-            key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-            restore-keys: |
-              ${{ runner.os }}-yarn-
-        - name: yarn install and test
-          run: |
-            yarn
-          env:
-            CI: true
-        - name: yarn build
-          run: yarn build
-        - name: Notify slack success
-          env:
-            SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
-          uses: ./
-          with:
-            message_id: ${{ steps.slack.outputs.message_id }}
-            channel: slack-test
-            status: SUCCESS
-            color: good
-        - name: Notify slack fail
-          if: failure()
-          env:
-            SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
-          uses: voxmedia/github-action-slack-notify-build@v1.1.2
-          with:
-            message_id: ${{ steps.slack.outputs.message_id }}
-            channel: slack-test
-            status: FAILED
-            color: danger
-        - name: Notify slack cancel
-          if: always() && !failure() && !success()
-          env:
-            SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
-          uses: voxmedia/github-action-slack-notify-build@v1.1.2
-          with:
-            message_id: ${{ steps.slack.outputs.message_id }}
-            channel: slack-test
-            status: CANCELLED
-            color: '#808080'
-    build-main:
-      runs-on: ubuntu-latest
-      if: |
-        github.event.workflow_run.head_branch == 'main' &&
-        github.event.workflow_run.conclusion == 'success'
-      steps:
-        - uses: actions/checkout@v1
-        - name: Use Node.js v12.x
-          uses: actions/setup-node@v1
-          with:
-            node-version: 12
-        - name: Notify slack
-          # Don't attempt to send Slack notifications on fork PRs which don't have access to secrets
-          id: slack
-          env:
-            SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
-          uses: ./
-          with:
-            channel: slack-test
-            status: STARTED
-            color: warning
-        - name: Get yarn cache
-          id: yarn-cache
-          run: echo "::set-output name=dir::$(yarn cache dir)"
-        - uses: actions/cache@v1
-          with:
-            path: ${{ steps.yarn-cache.outputs.dir }}
-            key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-            restore-keys: |
-              ${{ runner.os }}-yarn-
-        - name: yarn install and test
-          run: |
-            yarn
-          env:
-            CI: true
-        - name: yarn build
-          run: yarn build
-        - name: Notify slack success
-          env:
-            SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
-          uses: ./
-          with:
-            message_id: ${{ steps.slack.outputs.message_id }}
-            channel: slack-test
-            status: SUCCESS
-            color: good
-        - name: Notify slack fail
-          if: failure()
-          env:
-            SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
-          uses: voxmedia/github-action-slack-notify-build@v1.1.2
-          with:
-            message_id: ${{ steps.slack.outputs.message_id }}
-            channel: slack-test
-            status: FAILED
-            color: danger
-        - name: Notify slack cancel
-          if: always() && !failure() && !success()
-          env:
-            SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
-          uses: voxmedia/github-action-slack-notify-build@v1.1.2
-          with:
-            message_id: ${{ steps.slack.outputs.message_id }}
-            channel: slack-test
-            status: CANCELLED
-            color: '#808080'
-                    
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    if: |
+      github.event.workflow_run.head_branch == 'test' &&
+      github.event.workflow_run.conclusion == 'success'
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js v12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Notify slack
+        # Don't attempt to send Slack notifications on fork PRs which don't have access to secrets
+        id: slack
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+        uses: ./
+        with:
+          channel: slack-test
+          status: STARTED
+          color: warning
+      - name: Get yarn cache
+        id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: yarn install and test
+        run: |
+          yarn
+        env:
+          CI: true
+      - name: yarn build
+        run: yarn build
+      - name: Notify slack success
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+        uses: ./
+        with:
+          message_id: ${{ steps.slack.outputs.message_id }}
+          channel: slack-test
+          status: SUCCESS
+          color: good
+      - name: Notify slack fail
+        if: failure()
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+        uses: voxmedia/github-action-slack-notify-build@v1.1.2
+        with:
+          message_id: ${{ steps.slack.outputs.message_id }}
+          channel: slack-test
+          status: FAILED
+          color: danger
+      - name: Notify slack cancel
+        if: always() && !failure() && !success()
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+        uses: voxmedia/github-action-slack-notify-build@v1.1.2
+        with:
+          message_id: ${{ steps.slack.outputs.message_id }}
+          channel: slack-test
+          status: CANCELLED
+          color: '#808080'
+  build-main:
+    runs-on: ubuntu-latest
+    if: |
+      github.event.workflow_run.head_branch == 'main' &&
+      github.event.workflow_run.conclusion == 'success'
+    steps:
+      - uses: actions/checkout@v1
+      - name: Use Node.js v12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Notify slack
+        # Don't attempt to send Slack notifications on fork PRs which don't have access to secrets
+        id: slack
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+        uses: ./
+        with:
+          channel: slack-test
+          status: STARTED
+          color: warning
+      - name: Get yarn cache
+        id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: yarn install and test
+        run: |
+          yarn
+        env:
+          CI: true
+      - name: yarn build
+        run: yarn build
+      - name: Notify slack success
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+        uses: ./
+        with:
+          message_id: ${{ steps.slack.outputs.message_id }}
+          channel: slack-test
+          status: SUCCESS
+          color: good
+      - name: Notify slack fail
+        if: failure()
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+        uses: voxmedia/github-action-slack-notify-build@v1.1.2
+        with:
+          message_id: ${{ steps.slack.outputs.message_id }}
+          channel: slack-test
+          status: FAILED
+          color: danger
+      - name: Notify slack cancel
+        if: always() && !failure() && !success()
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+        uses: voxmedia/github-action-slack-notify-build@v1.1.2
+        with:
+          message_id: ${{ steps.slack.outputs.message_id }}
+          channel: slack-test
+          status: CANCELLED
+          color: '#808080'
+                  
