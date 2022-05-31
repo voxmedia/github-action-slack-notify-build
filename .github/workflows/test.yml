@@ -16,7 +16,6 @@ jobs:
           node-version: 12
       - name: Notify slack
         # Don't attempt to send Slack notifications on fork PRs which don't have access to secrets
-        if: env.SLACK_NOTIFICATIONS_BOT_TOKEN
         id: slack
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
@@ -43,7 +42,6 @@ jobs:
       - name: yarn build
         run: yarn build
       - name: Notify slack success
-        if: env.SLACK_NOTIFICATIONS_BOT_TOKEN
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
         uses: ./
