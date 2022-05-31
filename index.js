@@ -5,7 +5,6 @@ const { buildSlackAttachments, formatChannelName } = require('./src/utils');
 
 (async () => {
   try {
-    console.log('test change');
     const channel = core.getInput('channel');
     const status = core.getInput('status');
     const color = core.getInput('color');
