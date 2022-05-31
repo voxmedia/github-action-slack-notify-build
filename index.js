@@ -17,8 +17,6 @@ const { buildSlackAttachments, formatChannelName } = require('./src/utils');
       return;
     }
 
-    console.log('Event', github.event);
-    console.log('Context', github.context);
     const attachments = buildSlackAttachments({ status, color, github });
     const channelId = core.getInput('channel_id') || (await lookUpChannelId({ slack, channel }));
 
