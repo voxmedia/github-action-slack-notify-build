@@ -107,6 +107,10 @@ The ID of the channel to post the message to. **Required** if no `channel` is pr
 
 The color to use for the notification. Can be a hex value or any [valid Slack color level](https://api.slack.com/reference/messaging/attachments#fields) (e.g. `good`). Defaults to `#cccccc`.
 
+### `message_text`
+
+Optional freeform text to be included with the status
+
 ### `message_id`
 
 The ID of a previous Slack message to update instead of posting a new message. Typically passed using the `steps` context:

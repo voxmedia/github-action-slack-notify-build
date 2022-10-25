@@ -1072,6 +1072,7 @@ const { buildSlackAttachments, formatChannelName } = __webpack_require__(543);
     const status = core.getInput('status');
     const color = core.getInput('color');
     const messageId = core.getInput('message_id');
+    const messageText = core.getInput('message_text');
     const token = process.env.SLACK_BOT_TOKEN;
     const slack = new WebClient(token);
 
@@ -1092,6 +1093,7 @@ const { buildSlackAttachments, formatChannelName } = __webpack_require__(543);
 
     const args = {
       channel: channelId,
+      text: messageText || undefined,
       attachments,
     };
 
