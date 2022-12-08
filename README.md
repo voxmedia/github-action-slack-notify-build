@@ -14,6 +14,7 @@ with:
   color: good
 env:
   SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
+  SLACK_NO_RETRY: true
 ```
 
 The Slack notification leverages attachments to group important information together and provide valuable links:
