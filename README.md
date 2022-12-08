@@ -12,9 +12,9 @@ with:
   channel: app-alerts
   status: STARTED
   color: good
+  noRetry: true
 env:
   SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
-  SLACK_NO_RETRY: true
 ```
 
 The Slack notification leverages attachments to group important information together and provide valuable links:
@@ -24,6 +24,8 @@ The Slack notification leverages attachments to group important information toge
 When used with the `pull_request` event, a link to the originating pull request is included:
 
 <img src="docs/pr.png" alt="Screenshot of the pull_request event" width="540">
+
+If you want no retry for slack client, you can indicate with `noRetry: true` in `with` (if not, it's `tenRetriesInAboutThirtyMinutes` by default, you can check doc in [slack web api](https://www.npmjs.com/package/@slack/web-api))
 
 ### Updating an Existing Message
 
