@@ -12,7 +12,6 @@ with:
   channel: app-alerts
   status: STARTED
   color: good
-  noRetry: true
 env:
   SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
 ```
