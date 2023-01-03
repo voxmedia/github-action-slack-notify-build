@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/voxmedia/github-action-slack-notify-build/compare/v1.5.0...v1.6.0) (2023-01-03)
+
+
+### Features
+
+* upgrade to node 16 ([d3b556f](https://github.com/voxmedia/github-action-slack-notify-build/commit/d3b556fae7084b5835b1bef108379f0293ac64e9))
+
 # [1.5.0](https://github.com/voxmedia/github-action-slack-notify-build/compare/v1.4.0...v1.5.0) (2021-03-05)
 
 
