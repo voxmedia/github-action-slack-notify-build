@@ -1,6 +1,7 @@
 import { formatChannelName, buildSlackAttachments } from '../src/utils';
 import { GITHUB_PUSH_EVENT, GITHUB_PR_EVENT } from '../fixtures';
 const runId = parseInt(process.env.GITHUB_RUN_ID, 10);
+const job = process.env.GITHUB_JOB;
 
 describe('Utils', () => {
   describe('formatChannelName', () => {
@@ -26,6 +27,16 @@ describe('Utils', () => {
       expect(attachments[0].fields.find(a => a.title === 'Status')).toEqual({
         title: 'Status',
         value: 'STARTED',
+        short: true,
+      });
+    });
+
+    it('shows job', () => {
+        const attachments = buildSlackAttachments({ status: 'STARTED', color: 'good', github: GITHUB_PUSH_EVENT });
+
+        expect(attachments[0].fields.find(a => a.title === 'Job')).toEqual({
+        title: 'Job',
+        value: `${job}`,
         short: true,
       });
     });

@@ -8,6 +8,7 @@ function buildSlackAttachments({ status, color, github }) {
 
   const sha = event === 'pull_request' ? payload.pull_request.head.sha : github.context.sha;
   const runId = parseInt(process.env.GITHUB_RUN_ID, 10);
+  const job = process.env.GITHUB_JOB;
 
   const referenceLink =
     event === 'pull_request'
@@ -35,6 +36,11 @@ function buildSlackAttachments({ status, color, github }) {
           title: 'Workflow',
           value: `<https://github.com/${owner}/${repo}/actions/runs/${runId} | ${workflow}>`,
           short: true,
+        },
+        {
+          title: 'Job',
+          value: `${job}`,
+          short: true
         },
         {
           title: 'Status',
