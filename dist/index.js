@@ -1073,7 +1073,8 @@ const { buildSlackAttachments, formatChannelName } = __webpack_require__(543);
     const color = core.getInput('color');
     const messageId = core.getInput('message_id');
     const token = process.env.SLACK_BOT_TOKEN;
-    const slack = new WebClient(token);
+    const noRetry = core.getInput('noRetry');
+    const slack = new WebClient(token, noRetry ? { retryConfig: { retries: 0 } } : undefined);
 
     if (!channel && !core.getInput('channel_id')) {
       core.setFailed(`You must provider either a 'channel' or a 'channel_id'.`);

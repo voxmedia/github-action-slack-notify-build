@@ -1,3 +1,4 @@
+
 name: 'Slack Notify Build'
 description: 'Report GitHub Actions build status on Slack'
 branding:
@@ -19,6 +20,9 @@ inputs:
     default: '#cccccc'
   message_id:
     description: 'The ID of the existing Slack message to update.'
+    required: false
+  noRetry:
+    description: 'No retry if error'
     required: false
 outputs:
   message_id:
