@@ -115,6 +115,14 @@ The ID of a previous Slack message to update instead of posting a new message. T
 message_id: ${{ steps.<your_first_slack_step_id>.outputs.message_id }}
 ```
 
+### `retry_policy`
+
+The retry policy used by Slack WebClient's [retryConfig](https://slack.dev/node-slack-sdk/web-api#automatic-retries).
+Slack provides three pre-defined options:
+- `tenRetriesInAboutThirtyMinutes` (Default)
+- `fiveRetriesInFiveMinutes`
+- `rapidRetryPolicy`
+
 ## Outputs
 
 ### `message_id`
