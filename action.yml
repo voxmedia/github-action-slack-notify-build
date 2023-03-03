@@ -20,6 +20,10 @@ inputs:
   message_id:
     description: 'The ID of the existing Slack message to update.'
     required: false
+  retry_policy:
+    description: 'The retry policy used by the Slack WebClient.'
+    required: false
+    default: 'tenRetriesInAboutThirtyMinutes'
 outputs:
   message_id:
     description: 'The unique timestamp identifier of the Slack message sent'

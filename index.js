@@ -1,6 +1,6 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
-const { WebClient } = require('@slack/web-api');
+const { WebClient, retryPolicies } = require('@slack/web-api');
 const { buildSlackAttachments, formatChannelName } = require('./src/utils');
 
 (async () => {
@@ -9,8 +9,13 @@ const { buildSlackAttachments, formatChannelName } = require('./src/utils');
     const status = core.getInput('status');
     const color = core.getInput('color');
     const messageId = core.getInput('message_id');
+    const retryPolicy = core.getInput('retry_policy');
     const token = process.env.SLACK_BOT_TOKEN;
-    const slack = new WebClient(token);
+
+    if (!retryPolicy in retryPolicies) {
+      retryPolicy = retryPolicies.tenRetriesInAboutThirtyMinutes;
+    }
+    const slack = new WebClient(token, { retryConfig: retryPolicy });
 
     if (!channel && !core.getInput('channel_id')) {
       core.setFailed(`You must provider either a 'channel' or a 'channel_id'.`);
