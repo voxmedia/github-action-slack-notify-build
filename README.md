@@ -107,7 +107,11 @@ The ID of the channel to post the message to. **Required** if no `channel` is pr
 
 ### `build`
 
-The build identifier to show in the slack notification. Can be any string value (e.g. 2.5.0 (5) for build version 2.5.0 build number 5).
+The build identifier to show in the slack notification. Can be any string value (e.g. 2.5.0 (5) for build version 2.5.0 build number 5). **Required**
+
+### `environment`
+
+The build environment to show in the slack notification. Can be any string value (e.g. development/staging/production). **Required**
 
 ### `color`
 
