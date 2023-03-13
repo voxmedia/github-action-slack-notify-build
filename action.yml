@@ -16,6 +16,9 @@ inputs:
   build:
     description: 'The build number and version e.g. 2.5.0 (5)'
     required: true
+  environment:
+    description: 'The environment of the build e.g. dev/staging/production'
+    required: true
   color:
     description: 'The color of the Slack attachment.'
     required: true
