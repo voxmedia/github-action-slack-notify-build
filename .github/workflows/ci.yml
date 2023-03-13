@@ -1,8 +1,7 @@
-name: GitHub Action Slack Notify CI
+name: GitHub Action Slack Notify CI - Test and Build
 
 on:
-  - push
-  - pull_request
+  workflow_dispatch:
 
 jobs:
   build:
@@ -14,17 +13,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 16
-      - name: Notify slack
-        # Don't attempt to send Slack notifications on fork PRs which don't have access to secrets
-        if: env.SLACK_BOT_TOKEN
-        id: slack
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-        uses: ./
-        with:
-          channel_id: CB9QT2NNR
-          status: STARTED
-          color: warning
       - name: Get yarn cache
         id: yarn-cache
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -42,23 +30,3 @@ jobs:
           CI: true
       - name: yarn build
         run: yarn build
-      - name: release
-        if: ${{ endsWith(github.ref, '/main') }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release
-      - name: update v1 tag
-        if: ${{ endsWith(github.ref, '/main') }}
-        run: 'git push -f https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git HEAD:refs/heads/v1'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Notify slack success
-        if: env.SLACK_BOT_TOKEN
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-        uses: ./
-        with:
-          message_id: ${{ steps.slack.outputs.message_id }}
-          channel_id: CB9QT2NNR
-          status: SUCCESS
-          color: good

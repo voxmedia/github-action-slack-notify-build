@@ -13,6 +13,7 @@ export const GITHUB_PUSH_EVENT = {
     ref: 'refs/heads/my-branch',
     workflow: 'CI',
     eventName: 'push',
+    actor: 'testuser',
     sha: 'abc123',
   },
 };
@@ -32,6 +33,7 @@ export const GITHUB_PR_EVENT = {
     },
     workflow: 'CI',
     eventName: 'pull_request',
+    actor: 'testuser',
     sha: 'abc123',
   },
 };

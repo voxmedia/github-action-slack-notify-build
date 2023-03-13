@@ -1,4 +1,4 @@
-# Slack Notify Build
+# Slack Notify Build (forked from voxmedia/github-action-slack-notify-build)
 
 This action prints your GitHub Action build status to Slack. It takes an opinionated approach by showing attachments for metadata like branch, pull request, and event. This action allows [existing messages to be updated](#updating-an-existing-message) to reduce unwanted noise in your Slack channel. Heavily-inspired by [Post Slack messages](https://github.com/marketplace/actions/post-slack-message).
 
@@ -7,11 +7,12 @@ A [Slack bot token](https://api.slack.com/docs/token-types) is required to use t
 ## Usage
 
 ```yaml
-uses: voxmedia/github-action-slack-notify-build@v1
+uses: caraway-health/github-action-slack-notify-build@1.0.1
 with:
   channel: app-alerts
   status: STARTED
   color: good
+  build: 2.5.0 (5)
 env:
   SLACK_BOT_TOKEN: ${{ secrets.SLACK_NOTIFICATIONS_BOT_TOKEN }}
 ```
@@ -102,6 +103,10 @@ _Note_: If your workspace has many channels, supplying only a `channel` may caus
 ### `channel_id`
 
 The ID of the channel to post the message to. **Required** if no `channel` is provided, or if you need to send to a DM.
+
+### `build`
+
+The build identifier to show in the slack notification. Can be any string value (e.g. 2.5.0 (5) for build version 2.5.0 build number 5).
 
 ### `color`
 

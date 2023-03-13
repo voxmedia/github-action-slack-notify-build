@@ -1,11 +1,11 @@
 const { context } = require('@actions/github');
 
-function buildSlackAttachments({ status, color, github }) {
-  const { payload, ref, workflow, eventName } = github.context;
+function buildSlackAttachments({ status, build, environment, color, github }) {
+  const { payload, ref, workflow, eventName, actor } = github.context;
   const { owner, repo } = context.repo;
   const event = eventName;
   const branch = event === 'pull_request' ? payload.pull_request.head.ref : ref.replace('refs/heads/', '');
-
+  const user = actor;
   const sha = event === 'pull_request' ? payload.pull_request.head.sha : github.context.sha;
   const runId = parseInt(process.env.GITHUB_RUN_ID, 10);
 
@@ -27,13 +27,28 @@ function buildSlackAttachments({ status, color, github }) {
       color,
       fields: [
         {
-          title: 'Repo',
-          value: `<https://github.com/${owner}/${repo} | ${owner}/${repo}>`,
+          title: 'Workflow',
+          value: `<https://github.com/${owner}/${repo}/actions/runs/${runId} | ${workflow}>`,
           short: true,
         },
         {
-          title: 'Workflow',
-          value: `<https://github.com/${owner}/${repo}/actions/runs/${runId} | ${workflow}>`,
+          title: 'Triggered By',
+          value: user,
+          short: true,
+        },
+        {
+          title: 'Environment',
+          value: environment,
+          short: true,
+        },
+        {
+          title: 'Build Number/Version',
+          value: build,
+          short: true,
+        },
+        {
+          title: 'Repo',
+          value: `<https://github.com/${owner}/${repo} | ${owner}/${repo}>`,
           short: true,
         },
         {
@@ -45,6 +60,11 @@ function buildSlackAttachments({ status, color, github }) {
         {
           title: 'Event',
           value: event,
+          short: true,
+        },
+        {
+          title: 'Build',
+          value: build,
           short: true,
         },
       ],

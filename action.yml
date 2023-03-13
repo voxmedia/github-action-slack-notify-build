@@ -1,4 +1,4 @@
-name: 'Slack Notify Build'
+name: 'Caraway Pipeline Slack Notifications'
 description: 'Report GitHub Actions build status on Slack'
 branding:
   icon: message-square
@@ -12,6 +12,9 @@ inputs:
     required: false
   status:
     description: 'The status to list in the update.'
+    required: true
+  build:
+    description: 'The build number and version e.g. 2.5.0 (5)'
     required: true
   color:
     description: 'The color of the Slack attachment.'

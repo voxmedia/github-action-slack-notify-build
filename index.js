@@ -7,17 +7,27 @@ const { buildSlackAttachments, formatChannelName } = require('./src/utils');
   try {
     const channel = core.getInput('channel');
     const status = core.getInput('status');
+    const build = core.getInput('build');
+    const environment = core.getInput('environment');
     const color = core.getInput('color');
     const messageId = core.getInput('message_id');
     const token = process.env.SLACK_BOT_TOKEN;
     const slack = new WebClient(token);
 
+    if (!build && !core.getInput('build')) {
+      core.setFailed(`You must provide a 'build' value, use N/A if not applicable.`);
+    }
+
+    if (!environment && !core.getInput('environment')) {
+      core.setFailed(`You must provide a 'environment' value.`);
+    }
+
     if (!channel && !core.getInput('channel_id')) {
-      core.setFailed(`You must provider either a 'channel' or a 'channel_id'.`);
+      core.setFailed(`You must provide either a 'channel' or a 'channel_id'.`);
       return;
     }
 
-    const attachments = buildSlackAttachments({ status, color, github });
+    const attachments = buildSlackAttachments({ status, build, environment, color, github });
     const channelId = core.getInput('channel_id') || (await lookUpChannelId({ slack, channel }));
 
     if (!channelId) {
