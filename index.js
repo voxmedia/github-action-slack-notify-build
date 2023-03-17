@@ -9,12 +9,12 @@ const { buildSlackAttachments, formatChannelName } = require('./src/utils');
     const status = core.getInput('status');
     const color = core.getInput('color');
     const messageId = core.getInput('message_id');
-    const retryPolicy = core.getInput('retry_policy');
     const token = process.env.SLACK_BOT_TOKEN;
 
-    if (!retryPolicy in retryPolicies) {
-      retryPolicy = retryPolicies.tenRetriesInAboutThirtyMinutes;
-    }
+    const retryPolicy =
+      core.getInput('retry_policy') in retryPolicies
+        ? core.getInput('retry_policy')
+        : retryPolicies.tenRetriesInAboutThirtyMinutes;
     const slack = new WebClient(token, { retryConfig: retryPolicy });
 
     if (!channel && !core.getInput('channel_id')) {
