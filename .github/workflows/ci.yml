@@ -22,7 +22,7 @@ jobs:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
         uses: ./
         with:
-          channel_id: CB9QT2NNR
+          channel_id: C03JFG5EK8B
           status: STARTED
           color: warning
       - name: Get yarn cache
@@ -46,7 +46,7 @@ jobs:
         if: ${{ endsWith(github.ref, '/main') }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx semantic-release
+        run: npx -p node@v18-lts -c "npx semantic-release"
       - name: update v1 tag
         if: ${{ endsWith(github.ref, '/main') }}
         run: 'git push -f https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git HEAD:refs/heads/v1'
@@ -59,6 +59,6 @@ jobs:
         uses: ./
         with:
           message_id: ${{ steps.slack.outputs.message_id }}
-          channel_id: CB9QT2NNR
+          channel_id: C03JFG5EK8B
           status: SUCCESS
           color: good
