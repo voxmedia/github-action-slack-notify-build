@@ -22,7 +22,7 @@ export const GITHUB_PR_EVENT = {
     payload: {
       repository,
       pull_request: {
-        html_url: 'https://github.com/voxmedia/github-action-slack-notify-build/pulls/1',
+        html_url: 'https://github.com/justinr636/github-action-slack-notify-build/pulls/1',
         title: 'This is a PR',
         head: {
           ref: 'my-branch',

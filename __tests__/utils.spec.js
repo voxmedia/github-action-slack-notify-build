@@ -36,7 +36,7 @@ describe('Utils', () => {
 
         expect(attachments[0].fields.find(a => a.title === 'Workflow')).toEqual({
           title: 'Workflow',
-          value: `<https://github.com/voxmedia/github-action-slack-notify-build/actions/runs/${runId} | CI>`,
+          value: `<https://github.com/justinr636/github-action-slack-notify-build/actions/runs/${runId} | CI>`,
           short: true,
         });
       });
@@ -46,7 +46,7 @@ describe('Utils', () => {
 
         expect(attachments[0].fields.find(a => a.title === 'Repo')).toEqual({
           title: 'Repo',
-          value: `<https://github.com/voxmedia/github-action-slack-notify-build | voxmedia/github-action-slack-notify-build>`,
+          value: `<https://github.com/justinr636/github-action-slack-notify-build | justinr636/github-action-slack-notify-build>`,
           short: true,
         });
       });
@@ -66,7 +66,7 @@ describe('Utils', () => {
 
         expect(attachments[0].fields.find(a => a.title === 'Branch')).toEqual({
           title: 'Branch',
-          value: `<https://github.com/voxmedia/github-action-slack-notify-build/commit/abc123 | my-branch>`,
+          value: `<https://github.com/justinr636/github-action-slack-notify-build/commit/abc123 | my-branch>`,
           short: true,
         });
       });
@@ -78,7 +78,7 @@ describe('Utils', () => {
 
         expect(attachments[0].fields.find(a => a.title === 'Workflow')).toEqual({
           title: 'Workflow',
-          value: `<https://github.com/voxmedia/github-action-slack-notify-build/actions/runs/${runId} | CI>`,
+          value: `<https://github.com/justinr636/github-action-slack-notify-build/actions/runs/${runId} | CI>`,
           short: true,
         });
       });
@@ -98,7 +98,7 @@ describe('Utils', () => {
 
         expect(attachments[0].fields.find(a => a.title === 'Pull Request')).toEqual({
           title: 'Pull Request',
-          value: `<https://github.com/voxmedia/github-action-slack-notify-build/pulls/1 | This is a PR>`,
+          value: `<https://github.com/justinr636/github-action-slack-notify-build/pulls/1 | This is a PR>`,
           short: true,
         });
       });
