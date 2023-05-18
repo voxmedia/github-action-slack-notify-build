@@ -125,6 +125,15 @@ To use this GitHub Action, you'll need a [Slack bot token](https://api.slack.com
 1. **Set an icon for your bot.** Browse to the "Basic information" page listed in the sidebar. Scroll down to the section titled "Display information" to set an icon.
 1. **Install your app to your workspace.** At the top of the "Basic information" page, you can find a section titled "Install your app to your workspace". Click on it, then use the button to complete the installation.
 
+## Development Quickstart
+
+- `nvm use`
+- `npm i`
+- Make code changes in `src`
+- `npm run build`
+- Commit the modified `dist/index.js`
+- Cut a new release on github
+
 ## License
 
 The scripts and documentation in this project are released under the [Apache 2.0 License](LICENSE).
