@@ -1,3 +1,7 @@
+# v2 - 5/18/2023
+
+- Updated to node16
+
 # v1.1.1 - 2/3/2020
 
 - Fixes bug where owner/repo can not be determined with certain events (like scheduled jobs)
