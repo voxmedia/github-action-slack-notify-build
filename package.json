@@ -1,33 +1,32 @@
 {
   "name": "github-action-slack-notify-build",
-  "version": "1.6.0",
+  "version": "2.0.0",
   "main": "index.js",
   "license": "Apache-2.0",
   "scripts": {
     "build": "ncc build index.js",
-    "test": "jest"
+    "format": "prettier --write .",
+    "prepare": "husky"
   },
   "dependencies": {
     "@actions/core": "^1.2.6",
-    "@actions/github": "^1.1.0",
-    "@slack/web-api": "^5.3.0"
+    "@actions/github": "^6.0.0",
+    "@slack/web-api": "^7.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
     "@babel/preset-env": "^7.6.3",
     "@semantic-release/changelog": "^5.0.1",
     "@semantic-release/git": "^9.0.0",
-    "@zeit/ncc": "^0.20.5",
-    "babel-jest": "^24.9.0",
-    "husky": "^3.0.9",
-    "jest": "^24.9.0",
-    "prettier": "^1.18.2",
-    "pretty-quick": "^2.0.0"
+    "@vercel/ncc": "^0.38.1",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
+  "lint-staged": {
+    "**/*.{ts,json,md,yml,js,css,html}": [
+      "prettier --write"
+    ]
   },
   "release": {
     "plugins": [
