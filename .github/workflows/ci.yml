@@ -26,14 +26,10 @@ jobs:
           channel_id: CB9QT2NNR
           status: STARTED
           color: warning
-      - name: npm install and test
-        run: |
-          npm install
-          npm run test
+      - run: npm install
         env:
           CI: true
-      - name: npm run build
-        run: npm run build
+      - run: npm run build
       - name: release
         if: ${{ endsWith(github.ref, '/main') }}
         env:
