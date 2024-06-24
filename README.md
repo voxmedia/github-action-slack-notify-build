@@ -26,6 +26,8 @@ When used with the `pull_request` event, a link to the originating pull request 
 
 <img src="docs/pr.png" alt="Screenshot of the pull_request event" width="540">
 
+If you want no retry for slack client, you can indicate with `noRetry: true` in `with` (if not, it's `tenRetriesInAboutThirtyMinutes` by default, you can check doc in [slack web api](https://www.npmjs.com/package/@slack/web-api))
+
 ### Updating an Existing Message
 
 If you need to send multiple Slack build updates and you prefer to update a single message instead of posting multiple messages, you can pass a `message_id` to future steps.
