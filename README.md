@@ -35,7 +35,7 @@ If you need to send multiple Slack build updates and you prefer to update a sing
 Note: You must assign a step `id` to the first Slack notification step in order to reference it for future steps:
 
 ```yaml
-- name: Notify slack success
+- name: Notify slack starting
   if: success()
   id: slack # IMPORTANT: reference this step ID value in future Slack steps
   env:
