@@ -21,7 +21,7 @@ jobs:
         uses: ./
         with:
           token: ${{ secrets.SLACK_BOT_TOKEN }}
-          channel_id: infra-notifications
+          channel_id: plat-eng-notifications
           status: STARTED
           color: warning
 
@@ -30,6 +30,6 @@ jobs:
         with:
           token: ${{ secrets.SLACK_BOT_TOKEN }}
           message_id: ${{ steps.slack.outputs.message_id }}
-          channel_id: infra-notifications
+          channel_id: plat-eng-notifications
           status: SUCCESS
           color: good
